@@ -1,0 +1,3 @@
+[submodule "vendor/PonyExpress"]
+	path = vendor/PonyExpress
+	url = git@github.com:pizthewiz/PonyExpress.git
