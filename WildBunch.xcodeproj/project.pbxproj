@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B5E1416A4520076037F /* Quartz.framework */; };
+		D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8BA3B691416A4520076037F /* InfoPlist.strings */; };
+		D8BA3B6E1416A4520076037F /* WildBunchPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BA3B6D1416A4520076037F /* WildBunchPlugin.m */; };
+		D8BA3B851416A7100076037F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B631416A4520076037F /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D8BA3B591416A4520076037F /* WildBunch.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WildBunch.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8BA3B5E1416A4520076037F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		D8BA3B611416A4520076037F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D8BA3B631416A4520076037F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D8BA3B681416A4520076037F /* WildBunch-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WildBunch-Info.plist"; sourceTree = "<group>"; };
+		D8BA3B6A1416A4520076037F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D8BA3B6C1416A4520076037F /* WildBunchPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WildBunchPlugin.h; sourceTree = "<group>"; };
+		D8BA3B6D1416A4520076037F /* WildBunchPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WildBunchPlugin.m; sourceTree = "<group>"; };
+		D8BA3B6F1416A4520076037F /* WildBunch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WildBunch-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D8BA3B551416A4520076037F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */,
+				D8BA3B851416A7100076037F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D8BA3B4D1416A4520076037F = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B661416A4520076037F /* WildBunch */,
+				D8BA3B5B1416A4520076037F /* Frameworks */,
+				D8BA3B5A1416A4520076037F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D8BA3B5A1416A4520076037F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B591416A4520076037F /* WildBunch.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D8BA3B5B1416A4520076037F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B5E1416A4520076037F /* Quartz.framework */,
+				D8BA3B601416A4520076037F /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8BA3B601416A4520076037F /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B611416A4520076037F /* AppKit.framework */,
+				D8BA3B631416A4520076037F /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D8BA3B661416A4520076037F /* WildBunch */ = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B6C1416A4520076037F /* WildBunchPlugin.h */,
+				D8BA3B6D1416A4520076037F /* WildBunchPlugin.m */,
+				D8BA3B671416A4520076037F /* Supporting Files */,
+			);
+			path = WildBunch;
+			sourceTree = "<group>";
+		};
+		D8BA3B671416A4520076037F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D8BA3B681416A4520076037F /* WildBunch-Info.plist */,
+				D8BA3B691416A4520076037F /* InfoPlist.strings */,
+				D8BA3B6F1416A4520076037F /* WildBunch-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D8BA3B581416A4520076037F /* WildBunch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8BA3B721416A4520076037F /* Build configuration list for PBXNativeTarget "WildBunch" */;
+			buildPhases = (
+				D8BA3B541416A4520076037F /* Sources */,
+				D8BA3B551416A4520076037F /* Frameworks */,
+				D8BA3B561416A4520076037F /* Resources */,
+				D8BA3B841416A63A0076037F /* Update Info.plist With git Info */,
+				D8BA3B571416A4520076037F /* Copy Plug-In Into Place */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WildBunch;
+			productName = WildBunch;
+			productReference = D8BA3B591416A4520076037F /* WildBunch.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D8BA3B4F1416A4520076037F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Chorded Constructions";
+			};
+			buildConfigurationList = D8BA3B521416A4520076037F /* Build configuration list for PBXProject "WildBunch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D8BA3B4D1416A4520076037F;
+			productRefGroup = D8BA3B5A1416A4520076037F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D8BA3B581416A4520076037F /* WildBunch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D8BA3B561416A4520076037F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D8BA3B571416A4520076037F /* Copy Plug-In Into Place */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Plug-In Into Place";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This shell script simply copies the built plug-in to \"~/Library/Graphics/Quartz Composer Plug-Ins\" and overrides any previous version at that location\n\nmkdir -p \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins\"\nrm -rf \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/WildBunch.plugin\"\nditto \"$BUILT_PRODUCTS_DIR/WildBunch.plugin\" \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/WildBunch.plugin\"\n";
+		};
+		D8BA3B841416A63A0076037F /* Update Info.plist With git Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Info.plist With git Info";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/macrake update_bundle_version\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D8BA3B541416A4520076037F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8BA3B6E1416A4520076037F /* WildBunchPlugin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D8BA3B691416A4520076037F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8BA3B6A1416A4520076037F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D8BA3B701416A4520076037F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-Wall";
+			};
+			name = Debug;
+		};
+		D8BA3B711416A4520076037F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-Wall";
+			};
+			name = Release;
+		};
+		D8BA3B731416A4520076037F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
+				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		D8BA3B741416A4520076037F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
+				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D8BA3B521416A4520076037F /* Build configuration list for PBXProject "WildBunch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8BA3B701416A4520076037F /* Debug */,
+				D8BA3B711416A4520076037F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8BA3B721416A4520076037F /* Build configuration list for PBXNativeTarget "WildBunch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8BA3B731416A4520076037F /* Debug */,
+				D8BA3B741416A4520076037F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D8BA3B4F1416A4520076037F /* Project object */;
+}
