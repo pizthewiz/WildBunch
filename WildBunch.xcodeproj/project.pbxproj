@@ -7,13 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D84ED0571416D17F00AD4737 /* PonyExpress.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
+		D8A11AC01416D14800AA3713 /* PonyExpress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B5E1416A4520076037F /* Quartz.framework */; };
 		D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8BA3B691416A4520076037F /* InfoPlist.strings */; };
 		D8BA3B6E1416A4520076037F /* WildBunchPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BA3B6D1416A4520076037F /* WildBunchPlugin.m */; };
 		D8BA3B851416A7100076037F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B631416A4520076037F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D8A11AB71416D13100AA3713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D83E1B5C1411528100CB1258;
+			remoteInfo = PonyExpress;
+		};
+		D8A11AB91416D13100AA3713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D83E1B741411528100CB1258;
+			remoteInfo = PonyExpressTests;
+		};
+		D8A11ABB1416D13100AA3713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D83E1BD71412F87A00CB1258;
+			remoteInfo = OrphanExample;
+		};
+		D8A11ABE1416D13F00AA3713 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D83E1B5B1411528100CB1258;
+			remoteInfo = PonyExpress;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D8A11AC11416D15600AA3713 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D84ED0571416D17F00AD4737 /* PonyExpress.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
 		D8BA3B591416A4520076037F /* WildBunch.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WildBunch.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BA3B5E1416A4520076037F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		D8BA3B611416A4520076037F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -32,15 +80,27 @@
 			files = (
 				D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */,
 				D8BA3B851416A7100076037F /* Foundation.framework in Frameworks */,
+				D8A11AC01416D14800AA3713 /* PonyExpress.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D8A11AAE1416D13100AA3713 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D8A11AB81416D13100AA3713 /* PonyExpress.framework */,
+				D8A11ABA1416D13100AA3713 /* PonyExpressTests.octest */,
+				D8A11ABC1416D13100AA3713 /* OrphanExample */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D8BA3B4D1416A4520076037F = {
 			isa = PBXGroup;
 			children = (
+				D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */,
 				D8BA3B661416A4520076037F /* WildBunch */,
 				D8BA3B5B1416A4520076037F /* Frameworks */,
 				D8BA3B5A1416A4520076037F /* Products */,
@@ -103,12 +163,14 @@
 				D8BA3B541416A4520076037F /* Sources */,
 				D8BA3B551416A4520076037F /* Frameworks */,
 				D8BA3B561416A4520076037F /* Resources */,
+				D8A11AC11416D15600AA3713 /* Copy Frameworks */,
 				D8BA3B841416A63A0076037F /* Update Info.plist With git Info */,
 				D8BA3B571416A4520076037F /* Copy Plug-In Into Place */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D8A11ABF1416D13F00AA3713 /* PBXTargetDependency */,
 			);
 			name = WildBunch;
 			productName = WildBunch;
@@ -134,12 +196,42 @@
 			mainGroup = D8BA3B4D1416A4520076037F;
 			productRefGroup = D8BA3B5A1416A4520076037F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D8A11AAE1416D13100AA3713 /* Products */;
+					ProjectRef = D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				D8BA3B581416A4520076037F /* WildBunch */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D8A11AB81416D13100AA3713 /* PonyExpress.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PonyExpress.framework;
+			remoteRef = D8A11AB71416D13100AA3713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D8A11ABA1416D13100AA3713 /* PonyExpressTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PonyExpressTests.octest;
+			remoteRef = D8A11AB91416D13100AA3713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D8A11ABC1416D13100AA3713 /* OrphanExample */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = OrphanExample;
+			remoteRef = D8A11ABB1416D13100AA3713 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D8BA3B561416A4520076037F /* Resources */ = {
@@ -193,6 +285,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D8A11ABF1416D13F00AA3713 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PonyExpress;
+			targetProxy = D8A11ABE1416D13F00AA3713 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D8BA3B691416A4520076037F /* InfoPlist.strings */ = {
@@ -302,6 +402,7 @@
 				D8BA3B741416A4520076037F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
