@@ -22,7 +22,7 @@
 	<string>Copyright © 2011 Chorded Constructions. All rights reserved.</string>
 	<key>QCPlugInClasses</key>
 	<array>
-		<string>WildBunchPlugIn</string>
+		<string>WBOSCSenderPlugIn</string>
 	</array>
 </dict>
 </plist>

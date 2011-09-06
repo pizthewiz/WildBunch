@@ -1,5 +1,5 @@
 //
-//  WildBunchPlugin.h
+//  WBOSCSenderPlugIn.h
 //  WildBunch
 //
 //  Created by Jean-Pierre Mouilleseaux on 6 Sept 2011.
@@ -8,5 +8,5 @@
 
 #import <Quartz/Quartz.h>
 
-@interface WildBunchPlugIn : QCPlugIn
+@interface WBOSCSenderPlugIn : QCPlugIn
 @end

@@ -1,17 +1,18 @@
 //
-//  WildBunchPlugIn.m
+//  WBOSCSenderPlugIn.m
 //  WildBunch
 //
 //  Created by Jean-Pierre Mouilleseaux on 6 Sept 2011.
 //  Copyright (c) 2011 Chorded Constructions. All rights reserved.
 //
 
-#import "WildBunchPlugIn.h"
+#import "WBOSCSenderPlugIn.h"
+#import "WildBunch.h"
 
 #define	kQCPlugIn_Name				@"WildBunch"
 #define	kQCPlugIn_Description		@"WildBunch description"
 
-@implementation WildBunchPlugIn
+@implementation WBOSCSenderPlugIn
 
 /*
 Here you need to declare the input / output properties as dynamic as Quartz Composer will handle their implementation
@@ -78,7 +79,7 @@ Here you need to declare the input / output properties as dynamic as Quartz Comp
 
 @end
 
-@implementation WildBunchPlugIn (Execution)
+@implementation WBOSCSenderPlugIn (Execution)
 
 - (BOOL)startExecution:(id <QCPlugInContext>)context
 {
