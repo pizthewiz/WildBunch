@@ -9,4 +9,6 @@
 #import <Quartz/Quartz.h>
 
 @interface WBOSCSenderPlugIn : QCPlugIn
+@property (nonatomic, retain) NSString* inputHost;
+@property (nonatomic) NSUInteger inputPort;
 @end

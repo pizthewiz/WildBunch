@@ -1,0 +1,10 @@
+/* 
+  Localized.strings
+  WildBunch
+
+  Created by Jean-Pierre Mouilleseaux on 6 Sept 2011.
+  Copyright (c) 2011 Chorded Constructions. All rights reserved.
+*/
+
+"WBOSCSenderName" = "Wild Bunch OSC Sender";
+"WBOSCSenderDescription" = "DESCRIPTION";

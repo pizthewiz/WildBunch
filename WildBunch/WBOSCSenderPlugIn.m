@@ -9,121 +9,72 @@
 #import "WBOSCSenderPlugIn.h"
 #import "WildBunch.h"
 
-#define	kQCPlugIn_Name				@"WildBunch"
-#define	kQCPlugIn_Description		@"WildBunch description"
+static NSString* const WBSenderExampleCompositionName = @"";
 
 @implementation WBOSCSenderPlugIn
 
-/*
-Here you need to declare the input / output properties as dynamic as Quartz Composer will handle their implementation
-@dynamic inputFoo, outputBar;
-*/
+@dynamic inputHost, inputPort;
 
-+ (NSDictionary *)attributes
-{
-	/*
-	Return a dictionary of attributes describing the plug-in (QCPlugInAttributeNameKey, QCPlugInAttributeDescriptionKey...).
-	*/
-	
-	return [NSDictionary dictionaryWithObjectsAndKeys:kQCPlugIn_Name, QCPlugInAttributeNameKey, kQCPlugIn_Description, QCPlugInAttributeDescriptionKey, nil];
++ (NSDictionary*)attributes {
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+        CCLocalizedString(@"WBOSCSenderName", NULL), QCPlugInAttributeNameKey, 
+        CCLocalizedString(@"WBOSCSenderDescription", NULL), QCPlugInAttributeDescriptionKey, 
+        nil];
+
+#if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
+    if (&QCPlugInAttributeCategoriesKey != NULL) {
+        // array with category strings
+        NSArray* categories = [NSArray arrayWithObjects:@"Network", nil];
+        [attributes setObject:categories forKey:QCPlugInAttributeCategoriesKey];
+    }
+    if (&QCPlugInAttributeExamplesKey != NULL) {
+        // array of file paths or urls relative to plugin resources
+        NSArray* examples = [NSArray arrayWithObjects:[[NSBundle bundleForClass:[self class]] URLForResource:WBSenderExampleCompositionName withExtension:@"qtz"], nil];
+        [attributes setObject:examples forKey:QCPlugInAttributeExamplesKey];
+    }
+#endif
+
+    return (NSDictionary*)attributes;
 }
 
-+ (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
-{
-	/*
-	Specify the optional attributes for property based ports (QCPortAttributeNameKey, QCPortAttributeDefaultValueKey...).
-	*/
-	
++ (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
+    if ([key isEqualToString:@"inputHost"])
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Host", QCPortAttributeNameKey, 
+            QCPortTypeString, QCPortAttributeTypeKey, 
+            @"0.0.0.0", QCPortAttributeDefaultValueKey, nil];
+    else if ([key isEqualToString:@"inputPort"])
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
+            [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
+            [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
+            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
 	return nil;
 }
 
-+ (QCPlugInExecutionMode)executionMode
-{
-	/*
-	Return the execution mode of the plug-in: kQCPlugInExecutionModeProvider, kQCPlugInExecutionModeProcessor, or kQCPlugInExecutionModeConsumer.
-	*/
-	
-	return kQCPlugInExecutionModeProcessor;
++ (QCPlugInExecutionMode)executionMode {
+	return kQCPlugInExecutionModeConsumer;
 }
 
-+ (QCPlugInTimeMode)timeMode
-{
-	/*
-	Return the time dependency mode of the plug-in: kQCPlugInTimeModeNone, kQCPlugInTimeModeIdle or kQCPlugInTimeModeTimeBase.
-	*/
-	
-	return kQCPlugInTimeModeNone;
++ (QCPlugInTimeMode)timeMode {
+	return kQCPlugInTimeModeIdle;
 }
 
-- (id)init
-{
-	self = [super init];
-	if (self) {
-		/*
-		Allocate any permanent resource required by the plug-in.
-		*/
-	}
-	
-	return self;
-}
+#pragma mark - EXECUTION
 
-- (void)finalize
-{
-	/*
-	Release any non garbage collected resources created in -init.
-	*/
-	
-	[super finalize];
-}
-
-
-@end
-
-@implementation WBOSCSenderPlugIn (Execution)
-
-- (BOOL)startExecution:(id <QCPlugInContext>)context
-{
-	/*
-	Called by Quartz Composer when rendering of the composition starts: perform any required setup for the plug-in.
-	Return NO in case of fatal failure (this will prevent rendering of the composition to start).
-	*/
-	
+- (BOOL)startExecution:(id <QCPlugInContext>)context {
 	return YES;
 }
 
-- (void)enableExecution:(id <QCPlugInContext>)context
-{
-	/*
-	Called by Quartz Composer when the plug-in instance starts being used by Quartz Composer.
-	*/
+- (void)enableExecution:(id <QCPlugInContext>)context {
 }
 
-- (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
-{
-	/*
-	Called by Quartz Composer whenever the plug-in instance needs to execute.
-	Only read from the plug-in inputs and produce a result (by writing to the plug-in outputs or rendering to the destination OpenGL context) within that method and nowhere else.
-	Return NO in case of failure during the execution (this will prevent rendering of the current frame to complete).
-	
-	The OpenGL context for rendering can be accessed and defined for CGL macros using:
-	CGLContextObj cgl_ctx = [context CGLContextObj];
-	*/
-	
+- (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
 	return YES;
 }
 
-- (void)disableExecution:(id <QCPlugInContext>)context
-{
-	/*
-	Called by Quartz Composer when the plug-in instance stops being used by Quartz Composer.
-	*/
+- (void)disableExecution:(id <QCPlugInContext>)context {
 }
 
-- (void)stopExecution:(id <QCPlugInContext>)context
-{
-	/*
-	Called by Quartz Composer when rendering of the composition stops: perform any required cleanup for the plug-in.
-	*/
+- (void)stopExecution:(id <QCPlugInContext>)context {
 }
 
 @end
