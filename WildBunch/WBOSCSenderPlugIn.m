@@ -11,9 +11,14 @@
 
 static NSString* const WBSenderExampleCompositionName = @"";
 
+@interface WBOSCSenderPlugIn()
+@property (nonatomic, retain) PEOSCSender* sender;
+@end
+
 @implementation WBOSCSenderPlugIn
 
 @dynamic inputHost, inputPort;
+@synthesize sender;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
