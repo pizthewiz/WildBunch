@@ -12,13 +12,17 @@
 static NSString* const WBSenderExampleCompositionName = @"";
 
 @interface WBOSCSenderPlugIn()
+@property (nonatomic, retain) NSString* host;
+@property (nonatomic) NSUInteger port;
 @property (nonatomic, retain) PEOSCSender* sender;
+- (void)_buildUpSender;
+- (void)_tearDownSender;
 @end
 
 @implementation WBOSCSenderPlugIn
 
 @dynamic inputHost, inputPort, inputSendSignal, inputAddress;
-@synthesize sender;
+@synthesize host, port, sender;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -72,18 +76,49 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context {
-    // TODO - assemble sender
+    if (self.host && self.port)
+        [self _buildUpSender];
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
+
+    // negotiate new connection
+    if ([self didValueForInputKeyChange:@"inputHost"] || [self didValueForInputKeyChange:@"inputPort"]) {
+        CCDebugLog(@"host or port changed, will negotiate new connection");
+
+        // store for safe keeping, may be needed in unplug/replug or stop/start
+        self.host = self.inputHost;
+        self.port = self.inputPort;
+
+        [self _buildUpSender];
+    }
+
+    if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal) {
+        NSArray* types = [NSArray arrayWithObject:PEOSCMessageTypeTagImpulse];
+        NSArray* args = nil;
+        PEOSCMessage* message = [[PEOSCMessage alloc] initWithAddress:self.inputAddress typeTags:types arguments:args];
+        [self.sender sendMessage:message];
+    }
+
 	return YES;
 }
 
 - (void)disableExecution:(id <QCPlugInContext>)context {
-    // TODO - kill sender
+    [self _tearDownSender];
 }
 
 - (void)stopExecution:(id <QCPlugInContext>)context {
+}
+
+#pragma mark - PRIVATE
+
+- (void)_buildUpSender {
+    PEOSCSender* s = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
+    self.sender = s;
+}
+
+- (void)_tearDownSender {
+    self.sender = nil;
 }
 
 @end
