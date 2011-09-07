@@ -6,5 +6,5 @@
   Copyright (c) 2011 Chorded Constructions. All rights reserved.
 */
 
-"WBOSCSenderName" = "Wild Bunch OSC Sender";
-"WBOSCSenderDescription" = "DESCRIPTION";
+"WBOSCSenderName" = "OSC Message Sender";
+"WBOSCSenderDescription" = "WILD BUNCH!";
