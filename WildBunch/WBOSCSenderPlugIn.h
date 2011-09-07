@@ -11,4 +11,5 @@
 @interface WBOSCSenderPlugIn : QCPlugIn
 @property (nonatomic, retain) NSString* inputHost;
 @property (nonatomic) NSUInteger inputPort;
+@property (nonatomic, retain) NSString* inputAddress;
 @end

@@ -17,7 +17,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 @implementation WBOSCSenderPlugIn
 
-@dynamic inputHost, inputPort;
+@dynamic inputHost, inputPort, inputAddress;
 @synthesize sender;
 
 + (NSDictionary*)attributes {
@@ -44,14 +44,14 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 + (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
     if ([key isEqualToString:@"inputHost"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Host", QCPortAttributeNameKey, 
-            QCPortTypeString, QCPortAttributeTypeKey, 
-            @"0.0.0.0", QCPortAttributeDefaultValueKey, nil];
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Host", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"0.0.0.0", QCPortAttributeDefaultValueKey, nil];
     else if ([key isEqualToString:@"inputPort"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
             [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+    else if ([key isEqualToString:@"inputAddress"])
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
 	return nil;
 }
 
