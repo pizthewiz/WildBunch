@@ -17,7 +17,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 @implementation WBOSCSenderPlugIn
 
-@dynamic inputHost, inputPort, inputAddress;
+@dynamic inputHost, inputPort, inputSendSignal, inputAddress;
 @synthesize sender;
 
 + (NSDictionary*)attributes {
@@ -50,6 +50,8 @@ static NSString* const WBSenderExampleCompositionName = @"";
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
             [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+    else if ([key isEqualToString:@"inputSendSignal"])
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Send Signal", QCPortAttributeNameKey, nil];
     else if ([key isEqualToString:@"inputAddress"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
 	return nil;
@@ -70,6 +72,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context {
+    // TODO - assemble sender
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
@@ -77,6 +80,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (void)disableExecution:(id <QCPlugInContext>)context {
+    // TODO - kill sender
 }
 
 - (void)stopExecution:(id <QCPlugInContext>)context {
