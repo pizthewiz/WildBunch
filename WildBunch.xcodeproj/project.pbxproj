@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D84ED0571416D17F00AD4737 /* PonyExpress.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84ED0601416DD7300AD4737 /* Localizable.strings */; };
+		D84ED09414183AA100AD4737 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = D84ED09314183AA100AD4737 /* Settings.xib */; };
 		D8A11AC01416D14800AA3713 /* PonyExpress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B5E1416A4520076037F /* Quartz.framework */; };
 		D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8BA3B691416A4520076037F /* InfoPlist.strings */; };
@@ -68,6 +69,7 @@
 		D84ED0631416E7CB00AD4737 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = SOURCE_ROOT; };
 		D84ED0641416E7CB00AD4737 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 		D84ED0651416E7CB00AD4737 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = SOURCE_ROOT; };
+		D84ED09314183AA100AD4737 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
 		D8BA3B591416A4520076037F /* WildBunch.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WildBunch.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BA3B5E1416A4520076037F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -162,6 +164,7 @@
 				D8BA3B691416A4520076037F /* InfoPlist.strings */,
 				D8BA3B6F1416A4520076037F /* WildBunch-Prefix.pch */,
 				D84ED0601416DD7300AD4737 /* Localizable.strings */,
+				D84ED09314183AA100AD4737 /* Settings.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			files = (
 				D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */,
 				D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */,
+				D84ED09414183AA100AD4737 /* Settings.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

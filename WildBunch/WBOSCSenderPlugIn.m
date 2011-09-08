@@ -69,6 +69,12 @@ static NSString* const WBSenderExampleCompositionName = @"";
 	return kQCPlugInTimeModeIdle;
 }
 
+#pragma mark -
+
+- (QCPlugInViewController*)createViewController {
+	return [[QCPlugInViewController alloc] initWithPlugIn:self viewNibName:@"Settings"];
+}
+
 #pragma mark - EXECUTION
 
 - (BOOL)startExecution:(id <QCPlugInContext>)context {
@@ -81,12 +87,11 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
-
     // negotiate new connection
     if ([self didValueForInputKeyChange:@"inputHost"] || [self didValueForInputKeyChange:@"inputPort"]) {
         CCDebugLog(@"host or port changed, will negotiate new connection");
 
-        // store for safe keeping, may be needed in unplug/replug or stop/start
+        // store for safe keeping, may be needed stop/start
         self.host = self.inputHost;
         self.port = self.inputPort;
 
