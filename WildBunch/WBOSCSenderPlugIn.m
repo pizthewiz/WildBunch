@@ -151,7 +151,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
     // TODO - validate types
     for (NSUInteger idx = 0; idx < typesString.length; idx++) {
         NSString* type = [typesString substringWithRange:NSMakeRange(idx, 1)];
-        NSString* portKey = [NSString stringWithFormat:@"argument-%d", idx];
+        NSString* portKey = [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], idx];
         BOOL didAddPort = NO;
         if ([type isEqualToString:@"i"]) {
             [messageTypes addObject:PEOSCMessageTypeTagInteger];
