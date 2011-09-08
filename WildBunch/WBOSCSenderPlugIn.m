@@ -247,14 +247,20 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 - (void)_addMessageElement:(WBMessageElement*)element {
     [self _addPortForMessageElement:element];
+
+    [self willChangeValueForKey:@"messageElements"];
     [self.messageElements addObject:element];
+    [self didChangeValueForKey:@"messageElements"];
 }
 
 - (void)_removeMessageElement:(WBMessageElement*)element {
     if (element.portKey) {
         [self removeInputPortForKey:element.portKey];
     }
+
+    [self willChangeValueForKey:@"messageElements"];
     [self.messageElements removeObject:element];
+    [self didChangeValueForKey:@"messageElements"];
 }
 
 - (void)_addPortForMessageElement:(WBMessageElement*)element {
