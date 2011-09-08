@@ -1,5 +1,6 @@
 
 SENDER
-[ ] add custom XIB to define message signatures
+[X] temporarily expose types input where the message types can be defined
+[~] add custom XIB to define message signatures
 
 RECEIVER

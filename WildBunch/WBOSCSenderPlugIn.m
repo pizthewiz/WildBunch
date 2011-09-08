@@ -14,15 +14,19 @@ static NSString* const WBSenderExampleCompositionName = @"";
 @interface WBOSCSenderPlugIn()
 @property (nonatomic, strong) NSString* host;
 @property (nonatomic) NSUInteger port;
+@property (nonatomic, strong) NSArray* types;
+@property (nonatomic, strong) NSArray* argumentPortKeys;
 @property (nonatomic, strong) PEOSCSender* sender;
 - (void)_buildUpSender;
 - (void)_tearDownSender;
+- (void)_setupInputs:(NSString*)typesString;
+- (NSArray*)_arguments;
 @end
 
 @implementation WBOSCSenderPlugIn
 
 @dynamic inputHost, inputPort, inputSendSignal, inputAddress, inputTypes;
-@synthesize host, port, sender;
+@synthesize host, port, types, argumentPortKeys, sender;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -59,7 +63,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
     else if ([key isEqualToString:@"inputAddress"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
     if ([key isEqualToString:@"inputTypes"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Types", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"ifsbTFNI", QCPortAttributeDefaultValueKey, nil];
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Types", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"ifsTFNI", QCPortAttributeDefaultValueKey, nil];
 	return nil;
 }
 
@@ -100,10 +104,14 @@ static NSString* const WBSenderExampleCompositionName = @"";
         [self _buildUpSender];
     }
 
+    // MEGA UGLY DYNAMIC PORT SHIT
+    if ([self didValueForInputKeyChange:@"inputTypes"]) {
+        [self performSelector:@selector(_setupInputs:) withObject:self.inputTypes afterDelay:0.0];
+    }
+
     if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal) {
-        NSArray* types = [NSArray arrayWithObject:PEOSCMessageTypeTagImpulse];
-        NSArray* args = nil;
-        PEOSCMessage* message = [[PEOSCMessage alloc] initWithAddress:self.inputAddress typeTags:types arguments:args];
+        PEOSCMessage* message = [[PEOSCMessage alloc] initWithAddress:self.inputAddress typeTags:self.types arguments:[self _arguments]];
+        CCDebugLog(@"will send: %@", message);
         [self.sender sendMessage:message];
     }
 
@@ -126,6 +134,69 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 - (void)_tearDownSender {
     self.sender = nil;
+}
+
+- (void)_setupInputs:(NSString*)typesString {
+    // remove ports
+    // TODO - only remove deltas?
+    if (self.argumentPortKeys.count) {
+        for (NSString* portKey in self.argumentPortKeys) {
+            [self removeInputPortForKey:portKey];
+        }
+    }
+
+    NSMutableArray* messageTypes = [[NSMutableArray alloc] init];
+    NSMutableArray* portKeys = [[NSMutableArray alloc] init];
+
+    // TODO - validate types
+    for (NSUInteger idx = 0; idx < typesString.length; idx++) {
+        NSString* type = [typesString substringWithRange:NSMakeRange(idx, 1)];
+        NSString* portKey = [NSString stringWithFormat:@"argument-%d", idx];
+        BOOL didAddPort = NO;
+        if ([type isEqualToString:@"i"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagInteger];
+            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Integer", QCPortAttributeNameKey, [NSNumber numberWithInt:INT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithInt:INT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithInt:0], QCPortAttributeDefaultValueKey, nil];
+            [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
+            didAddPort = YES;
+        } else if ([type isEqualToString:@"f"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagFloat];
+            // NB - setting min and max seemes to mess up the 0 value to 1.175e-38
+//            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, [NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
+            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
+            [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
+            didAddPort = YES;
+        } else if ([type isEqualToString:@"s"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagString];
+            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC String", QCPortAttributeNameKey, @"Log Lady", QCPortAttributeDefaultValueKey, nil];
+            [self addInputPortWithType:QCPortTypeString forKey:portKey withAttributes:attributes];
+            didAddPort = YES;
+        } else if ([type isEqualToString:@"T"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagTrue];
+        } else if ([type isEqualToString:@"F"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagFalse];
+        } else if ([type isEqualToString:@"N"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagNull];
+        } else if ([type isEqualToString:@"I"]) {
+            [messageTypes addObject:PEOSCMessageTypeTagImpulse];
+        }
+
+        // NB - for now, only add ports to types that require arguments
+        if (didAddPort) {
+            [portKeys addObject:portKey];
+        }
+    }
+
+    self.types = messageTypes;
+    self.argumentPortKeys = portKeys;
+}
+
+- (NSArray*)_arguments {
+    NSMutableArray* args = [[NSMutableArray alloc] init];
+    for (NSString* portKey in self.argumentPortKeys) {
+        id value = [self valueForInputKey:portKey];
+        [args addObject:value];
+    }
+    return (NSArray*)args;
 }
 
 @end
