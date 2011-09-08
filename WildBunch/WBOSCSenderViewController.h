@@ -9,4 +9,6 @@
 #import <Quartz/Quartz.h>
 
 @interface WBOSCSenderViewController : QCPlugInViewController
+- (IBAction)addMessageElement:(id)sender;
+- (IBAction)removeMessageElement:(id)sender;
 @end

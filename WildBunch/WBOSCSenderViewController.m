@@ -7,6 +7,16 @@
 //
 
 #import "WBOSCSenderViewController.h"
+#import "WildBunch.h"
 
 @implementation WBOSCSenderViewController
+
+- (IBAction)addMessageElement:(id)sender {
+    CCDebugLogSelector();
+}
+
+- (IBAction)removeMessageElement:(id)sender {
+    CCDebugLogSelector();    
+}
+
 @end
