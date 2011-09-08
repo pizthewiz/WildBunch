@@ -384,6 +384,7 @@
 				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
 				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -396,6 +397,7 @@
 				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
 				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Graphics/Quartz Composer Plug-Ins";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = plugin;
 			};
