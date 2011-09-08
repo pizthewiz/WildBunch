@@ -10,6 +10,7 @@
 		D84ED0571416D17F00AD4737 /* PonyExpress.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84ED0601416DD7300AD4737 /* Localizable.strings */; };
 		D84ED09414183AA100AD4737 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = D84ED09314183AA100AD4737 /* Settings.xib */; };
+		D84ED0A614192E6C00AD4737 /* WBOSCSenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */; };
 		D8A11AC01416D14800AA3713 /* PonyExpress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B5E1416A4520076037F /* Quartz.framework */; };
 		D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8BA3B691416A4520076037F /* InfoPlist.strings */; };
@@ -70,6 +71,8 @@
 		D84ED0641416E7CB00AD4737 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 		D84ED0651416E7CB00AD4737 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = SOURCE_ROOT; };
 		D84ED09314183AA100AD4737 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
+		D84ED0A414192E6C00AD4737 /* WBOSCSenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCSenderViewController.h; sourceTree = "<group>"; };
+		D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCSenderViewController.m; sourceTree = "<group>"; };
 		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
 		D8BA3B591416A4520076037F /* WildBunch.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WildBunch.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8BA3B5E1416A4520076037F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -148,6 +151,8 @@
 				D84ED05C1416DA7600AD4737 /* WildBunch.h */,
 				D8BA3B6C1416A4520076037F /* WBOSCSenderPlugIn.h */,
 				D8BA3B6D1416A4520076037F /* WBOSCSenderPlugIn.m */,
+				D84ED0A414192E6C00AD4737 /* WBOSCSenderViewController.h */,
+				D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */,
 				D8BA3B671416A4520076037F /* Supporting Files */,
 				D84ED0641416E7CB00AD4737 /* README.markdown */,
 				D84ED0621416E7CB00AD4737 /* CHANGELOG */,
@@ -299,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8BA3B6E1416A4520076037F /* WBOSCSenderPlugIn.m in Sources */,
+				D84ED0A614192E6C00AD4737 /* WBOSCSenderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
