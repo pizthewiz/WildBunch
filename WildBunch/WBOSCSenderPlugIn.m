@@ -10,13 +10,6 @@
 #import "WildBunch.h"
 #import "WBOSCSenderViewController.h"
 
-@interface WBMessageElement : NSObject <NSCoding>
-+ (id)messageElementWithType:(NSString*)type portKey:(NSString*)portKey;
-- (id)initWithType:(NSString*)type portKey:(NSString*)portKey;
-@property (nonatomic, strong) NSString* type;
-@property (nonatomic, strong) NSString* portKey;
-@end
-
 @implementation WBMessageElement
 @synthesize type, portKey;
 + (id)messageElementWithType:(NSString *)type portKey:(NSString*)portKey {
@@ -46,37 +39,6 @@
 @end
 
 #pragma mark -
-
-/*
-static NSString* messageTypeForCode(NSString* code) {
-    NSString* type = nil;
-    if ([code isEqualToString:@"i"]) {
-        type = PEOSCMessageTypeTagInteger;
-    } else if ([code isEqualToString:@"f"]) {
-        type = PEOSCMessageTypeTagFloat;
-    } else if ([code isEqualToString:@"s"]) {
-        type = PEOSCMessageTypeTagString;
-    } else if ([code isEqualToString:@"b"]) {
-        type = PEOSCMessageTypeTagBlob;
-    } else if ([code isEqualToString:@"T"]) {
-        type = PEOSCMessageTypeTagTrue;
-    } else if ([code isEqualToString:@"F"]) {
-        type = PEOSCMessageTypeTagFalse;
-    } else if ([code isEqualToString:@"N"]) {
-        type = PEOSCMessageTypeTagNull;
-    } else if ([code isEqualToString:@"I"]) {
-        type = PEOSCMessageTypeTagImpulse;
-    }
-    return type;
-}
-
-static BOOL shouldAddPortForType(NSString* type) {
-    BOOL status = NO;
-    if ([type isEqualToString:PEOSCMessageTypeTagInteger] || [type isEqualToString:PEOSCMessageTypeTagFloat] || [type isEqualToString:PEOSCMessageTypeTagString] || [type isEqualToString:PEOSCMessageTypeTagBlob])
-        status = YES;
-    return status;
-}
-*/
 
 static NSString* const WBSenderExampleCompositionName = @"";
 
@@ -231,19 +193,6 @@ static NSString* const WBSenderExampleCompositionName = @"";
 - (void)_tearDownSender {
     self.sender = nil;
 }
-
-//- (void)_setupInputsForTypeString:(NSString*)typesString {
-//    for (NSUInteger idx = 0; idx < typesString.length; idx++) {
-//        NSString* typeCode = [typesString substringWithRange:NSMakeRange(idx, 1)];
-//        NSString* type = messageTypeForCode(typeCode);
-//
-//        BOOL shouldAddPort = shouldAddPortForType(type);
-//        NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], idx] : nil;
-//
-//        WBMessageElement* element = [WBMessageElement messageElementWithType:type portKey:portKey];
-//        [self.messageElements addObject:element];
-//    }
-//}
 
 - (void)_addMessageElement:(WBMessageElement*)element {
     [self _addPortForMessageElement:element];
