@@ -13,5 +13,4 @@
 @property (nonatomic) NSUInteger inputPort;
 @property (nonatomic) BOOL inputSendSignal;
 @property (nonatomic, strong) NSString* inputAddress;
-@property (nonatomic, strong) NSString* inputTypes;
 @end

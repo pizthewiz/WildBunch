@@ -47,6 +47,7 @@
 
 #pragma mark -
 
+/*
 static NSString* messageTypeForCode(NSString* code) {
     NSString* type = nil;
     if ([code isEqualToString:@"i"]) {
@@ -75,6 +76,7 @@ static BOOL shouldAddPortForType(NSString* type) {
         status = YES;
     return status;
 }
+*/
 
 static NSString* const WBSenderExampleCompositionName = @"";
 
@@ -82,20 +84,20 @@ static NSString* const WBSenderExampleCompositionName = @"";
 @property (nonatomic, strong) NSString* host;
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, strong) NSMutableArray* messageElements;
-@property (nonatomic, strong) NSMutableArray* oldMessageElements;
 @property (nonatomic, strong) PEOSCSender* sender;
 - (void)_buildUpSender;
 - (void)_tearDownSender;
-- (void)_setupInputsForTypeString:(NSString*)typesString; // MEGA HACK
-- (void)_setupPorts;
+- (void)_addMessageElement:(WBMessageElement*)element;
+- (void)_removeMessageElement:(WBMessageElement*)element;
+- (void)_addPortForMessageElement:(WBMessageElement*)element;
 - (NSArray*)_types;
 - (NSArray*)_arguments;
 @end
 
 @implementation WBOSCSenderPlugIn
 
-@dynamic inputHost, inputPort, inputSendSignal, inputAddress, inputTypes;
-@synthesize host, port, messageElements, oldMessageElements, sender;
+@dynamic inputHost, inputPort, inputSendSignal, inputAddress;
+@synthesize host, port, messageElements, sender;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -131,8 +133,6 @@ static NSString* const WBSenderExampleCompositionName = @"";
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Send Signal", QCPortAttributeNameKey, nil];
     else if ([key isEqualToString:@"inputAddress"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
-    if ([key isEqualToString:@"inputTypes"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Types", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"ifsTFNI", QCPortAttributeDefaultValueKey, nil];
 	return nil;
 }
 
@@ -168,8 +168,12 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key {
     [super setSerializedValue:serializedValue forKey:key];
+
+    // setup ports
     if ([key isEqualToString:@"messageElements"]) {
-        [self _setupPorts];
+        for (WBMessageElement* element in self.messageElements) {
+            [self _addPortForMessageElement:element];
+        }
     }
 }
 
@@ -180,7 +184,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context {
-    if (self.host && self.port)
+    if (self.host && ![self.host isEqualToString:@""] && self.port)
         [self _buildUpSender];
 }
 
@@ -194,11 +198,6 @@ static NSString* const WBSenderExampleCompositionName = @"";
         self.port = self.inputPort;
 
         [self _buildUpSender];
-    }
-
-    // MEGA HACKED DYNAMIC PORT SHIT
-    if ([self didValueForInputKeyChange:@"inputTypes"]) {
-        [self performSelector:@selector(_setupInputsForTypeString:) withObject:self.inputTypes afterDelay:0.0];
     }
 
     if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal) {
@@ -226,43 +225,40 @@ static NSString* const WBSenderExampleCompositionName = @"";
 
 - (void)_buildUpSender {
     PEOSCSender* s = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
-    self.sender = s;
+    self.sender = s;        
 }
 
 - (void)_tearDownSender {
     self.sender = nil;
 }
 
-- (void)_setupInputsForTypeString:(NSString*)typesString {
-    // TODO - somehow delta shit
-    self.oldMessageElements = self.messageElements;
-    self.messageElements = [NSMutableArray array];
+//- (void)_setupInputsForTypeString:(NSString*)typesString {
+//    for (NSUInteger idx = 0; idx < typesString.length; idx++) {
+//        NSString* typeCode = [typesString substringWithRange:NSMakeRange(idx, 1)];
+//        NSString* type = messageTypeForCode(typeCode);
+//
+//        BOOL shouldAddPort = shouldAddPortForType(type);
+//        NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], idx] : nil;
+//
+//        WBMessageElement* element = [WBMessageElement messageElementWithType:type portKey:portKey];
+//        [self.messageElements addObject:element];
+//    }
+//}
 
-    for (NSUInteger idx = 0; idx < typesString.length; idx++) {
-        NSString* typeCode = [typesString substringWithRange:NSMakeRange(idx, 1)];
-        NSString* type = messageTypeForCode(typeCode);
-
-        BOOL shouldAddPort = shouldAddPortForType(type);
-        NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], idx] : nil;
-
-        WBMessageElement* element = [WBMessageElement messageElementWithType:type portKey:portKey];
-        [self.messageElements addObject:element];
-    }
+- (void)_addMessageElement:(WBMessageElement*)element {
+    [self _addPortForMessageElement:element];
+    [self.messageElements addObject:element];
 }
 
-- (void)_setupPorts {
-    // remove now-missing ports
-    // TODO - only remove deltas?
-    for (WBMessageElement* element in self.oldMessageElements) {
-        if (!element.portKey)
-            continue;
+- (void)_removeMessageElement:(WBMessageElement*)element {
+    if (element.portKey) {
         [self removeInputPortForKey:element.portKey];
     }
+    [self.messageElements removeObject:element];
+}
 
-    for (WBMessageElement* element in self.messageElements) {
-        if (!element.portKey)
-            continue;
-    
+- (void)_addPortForMessageElement:(WBMessageElement*)element {
+    if (element.portKey) {
         if ([element.type isEqualToString:PEOSCMessageTypeTagInteger]) {
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Integer", QCPortAttributeNameKey, [NSNumber numberWithInt:INT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithInt:INT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithInt:0], QCPortAttributeDefaultValueKey, nil];
             [self addInputPortWithType:QCPortTypeNumber forKey:element.portKey withAttributes:attributes];
