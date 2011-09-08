@@ -12,16 +12,16 @@
 static NSString* const WBSenderExampleCompositionName = @"";
 
 @interface WBOSCSenderPlugIn()
-@property (nonatomic, retain) NSString* host;
+@property (nonatomic, strong) NSString* host;
 @property (nonatomic) NSUInteger port;
-@property (nonatomic, retain) PEOSCSender* sender;
+@property (nonatomic, strong) PEOSCSender* sender;
 - (void)_buildUpSender;
 - (void)_tearDownSender;
 @end
 
 @implementation WBOSCSenderPlugIn
 
-@dynamic inputHost, inputPort, inputSendSignal, inputAddress;
+@dynamic inputHost, inputPort, inputSendSignal, inputAddress, inputTypes;
 @synthesize host, port, sender;
 
 + (NSDictionary*)attributes {
@@ -58,6 +58,8 @@ static NSString* const WBSenderExampleCompositionName = @"";
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Send Signal", QCPortAttributeNameKey, nil];
     else if ([key isEqualToString:@"inputAddress"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
+    if ([key isEqualToString:@"inputTypes"])
+        return [NSDictionary dictionaryWithObjectsAndKeys:@"Types", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"ifsbTFNI", QCPortAttributeDefaultValueKey, nil];
 	return nil;
 }
 
