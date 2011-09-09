@@ -10,48 +10,29 @@
 #import "WildBunch.h"
 #import "WBOSCSenderViewController.h"
 
-@implementation WBMessageElement
-@synthesize type, portKey;
-+ (id)messageElementWithType:(NSString *)type portKey:(NSString*)portKey {
-    id messageDataSet = [[self alloc] initWithType:type portKey:portKey];
-    return messageDataSet;
-}
-- (id)initWithType:(NSString*)typ portKey:(NSString*)por {
-    self = [super init];
-    if (self) {
-        self.type = typ;
-        self.portKey = por;
-    }
-    return self;
-}
-- (id)initWithCoder:(NSCoder*)decoder {
-    self = [super init];
-    if (self) {
-        self.type = [decoder decodeObjectForKey:@"type"];
-        self.portKey = [decoder decodeObjectForKey:@"portKey"];
-    }
-    return self;
-}
-- (void)encodeWithCoder:(NSCoder*)encoder {
-    [encoder encodeObject:self.type forKey:@"type"];
-    [encoder encodeObject:self.portKey forKey:@"portKey"];
+@interface NSDictionary(WBAdditions)
+- (BOOL)hasKey:(NSString*)key;
+@end
+@implementation NSDictionary(WBAdditions)
+- (BOOL)hasKey:(NSString*)key {
+    return [self objectForKey:key] != nil;
 }
 @end
 
-#pragma mark -
+#pragma mark - PLUGIN
 
 static NSString* const WBSenderExampleCompositionName = @"";
 
 @interface WBOSCSenderPlugIn()
 @property (nonatomic, strong) NSString* host;
 @property (nonatomic) NSUInteger port;
-@property (nonatomic, strong) NSMutableArray* messageElements;
+@property (nonatomic, strong) NSMutableArray* messageParameters;
 @property (nonatomic, strong) PEOSCSender* sender;
 - (void)_buildUpSender;
 - (void)_tearDownSender;
-- (void)_addMessageElement:(WBMessageElement*)element;
-- (void)_removeMessageElement:(WBMessageElement*)element;
-- (void)_addPortForMessageElement:(WBMessageElement*)element;
+- (void)_addMessageParameter:(NSDictionary*)param;
+- (void)_removeMessageParameter:(NSDictionary*)param;
+- (void)_addPortForMessageParameter:(NSDictionary*)param;
 - (NSArray*)_types;
 - (NSArray*)_arguments;
 @end
@@ -59,7 +40,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 @implementation WBOSCSenderPlugIn
 
 @dynamic inputHost, inputPort, inputSendSignal, inputAddress;
-@synthesize host, port, messageElements, sender;
+@synthesize host, port, messageParameters, sender;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -107,7 +88,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 + (NSArray*)plugInKeys {
-    return [NSArray arrayWithObjects:@"messageElements", nil];
+    return [NSArray arrayWithObjects:@"messageParameters", nil];
 }
 
 #pragma mark -
@@ -121,7 +102,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
 - (id)init {
     self = [super init];
     if (self) {
-        self.messageElements = [NSMutableArray array];
+        self.messageParameters = [NSMutableArray array];
     }
     return self;
 }
@@ -129,13 +110,14 @@ static NSString* const WBSenderExampleCompositionName = @"";
 #pragma mark -
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key {
-    [super setSerializedValue:serializedValue forKey:key];
-
-    // setup ports
-    if ([key isEqualToString:@"messageElements"]) {
-        for (WBMessageElement* element in self.messageElements) {
-            [self _addPortForMessageElement:element];
+    // setup params and ports
+    if ([key isEqualToString:@"messageParameters"]) {
+        self.messageParameters = [serializedValue mutableCopy];
+        for (id param in self.messageParameters) {
+            [self _addPortForMessageParameter:param];
         }
+    } else {
+        [super setSerializedValue:serializedValue forKey:key];
     }
 }
 
@@ -194,55 +176,56 @@ static NSString* const WBSenderExampleCompositionName = @"";
     self.sender = nil;
 }
 
-- (void)_addMessageElement:(WBMessageElement*)element {
-    [self _addPortForMessageElement:element];
+- (void)_addMessageParameter:(NSDictionary*)param {
+    [self _addPortForMessageParameter:param];
 
-    [self willChangeValueForKey:@"messageElements"];
-    [self.messageElements addObject:element];
-    [self didChangeValueForKey:@"messageElements"];
+    [self willChangeValueForKey:@"messageParameters"];
+    [self.messageParameters addObject:param];
+    [self didChangeValueForKey:@"messageParameters"];
 }
 
-- (void)_removeMessageElement:(WBMessageElement*)element {
-    if (element.portKey) {
-        [self removeInputPortForKey:element.portKey];
+- (void)_removeMessageParameter:(NSDictionary*)param {
+    if ([param hasKey:WBOSCMessageParameterPortKey]) {
+        [self removeInputPortForKey:[param objectForKey:WBOSCMessageParameterPortKey]];
     }
 
-    [self willChangeValueForKey:@"messageElements"];
-    [self.messageElements removeObject:element];
-    [self didChangeValueForKey:@"messageElements"];
+    [self willChangeValueForKey:@"messageParameters"];
+    [self.messageParameters removeObject:param];
+    [self didChangeValueForKey:@"messageParameters"];
 }
 
-- (void)_addPortForMessageElement:(WBMessageElement*)element {
-    if (element.portKey) {
-        if ([element.type isEqualToString:PEOSCMessageTypeTagInteger]) {
+- (void)_addPortForMessageParameter:(NSDictionary*)param {
+    if ([param hasKey:WBOSCMessageParameterPortKey]) {
+        NSString* type = [param objectForKey:WBOSCMessageParameterTypeKey];
+        NSString* portKey = [param objectForKey:WBOSCMessageParameterPortKey];
+        if ([type isEqualToString:PEOSCMessageTypeTagInteger]) {
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Integer", QCPortAttributeNameKey, [NSNumber numberWithInt:INT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithInt:INT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithInt:0], QCPortAttributeDefaultValueKey, nil];
-            [self addInputPortWithType:QCPortTypeNumber forKey:element.portKey withAttributes:attributes];
-        } else if ([element.type isEqualToString:PEOSCMessageTypeTagFloat]) {
+            [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
+        } else if ([type isEqualToString:PEOSCMessageTypeTagFloat]) {
             // NB - setting min and max seemes to mess up the 0.0 value to 1.175e-38
-//            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, [NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
-            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
-            [self addInputPortWithType:QCPortTypeNumber forKey:element.portKey withAttributes:attributes];
-        } else if ([element.type isEqualToString:PEOSCMessageTypeTagString]) {
+            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, /*[NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeMaximumValueKey,*/ [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
+            [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
+        } else if ([type isEqualToString:PEOSCMessageTypeTagString]) {
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC String", QCPortAttributeNameKey, @"Log Lady", QCPortAttributeDefaultValueKey, nil];
-            [self addInputPortWithType:QCPortTypeString forKey:element.portKey withAttributes:attributes];
+            [self addInputPortWithType:QCPortTypeString forKey:portKey withAttributes:attributes];
         }
     }
 }
 
 - (NSArray*)_types {
     NSMutableArray* types = [NSMutableArray array];
-    for (WBMessageElement* element in self.messageElements) {
-        [types addObject:element.type];
+    for (NSDictionary* param in self.messageParameters) {
+        [types addObject:[param objectForKey:WBOSCMessageParameterTypeKey]];
     }
     return (NSArray*)types;
 }
 
 - (NSArray*)_arguments {
     NSMutableArray* args = [[NSMutableArray alloc] init];
-    for (WBMessageElement* element in self.messageElements) {
-        if (!element.portKey)
+    for (NSDictionary* param in self.messageParameters) {
+        if (![param hasKey:WBOSCMessageParameterPortKey])
             continue;
-        id value = [self valueForInputKey:element.portKey];
+        id value = [self valueForInputKey:[param objectForKey:WBOSCMessageParameterPortKey]];
         [args addObject:value];
     }
     return (NSArray*)args;

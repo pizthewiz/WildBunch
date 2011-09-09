@@ -8,7 +8,9 @@
 
 #import "WBOSCSenderViewController.h"
 #import "WildBunch.h"
-#import "WBOSCSenderPlugIn.h"
+
+NSString* const WBOSCMessageParameterTypeKey = @"WBOSCMessageParameterTypeKey";
+NSString* const WBOSCMessageParameterPortKey = @"WBOSCMessageParameterPortKey";
 
 static BOOL shouldAddPortForType(NSString* type) {
     BOOL status = NO;
@@ -23,7 +25,7 @@ static BOOL shouldAddPortForType(NSString* type) {
 
 @implementation WBOSCSenderViewController
 
-@synthesize elements, typeTagPopUpBotton, types;
+@synthesize parameters, typeTagPopUpBotton, types;
 
 - (void)awakeFromNib {
     self.types = [NSArray arrayWithObjects:PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, PEOSCMessageTypeTagTrue, PEOSCMessageTypeTagFalse, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse, nil];
@@ -34,26 +36,26 @@ static BOOL shouldAddPortForType(NSString* type) {
 
 #pragma mark -
 
-- (IBAction)addMessageElement:(id)sender {
+- (IBAction)addMessageParameter:(id)sender {
     CCDebugLogSelector();
 
     NSString* type = [self.types objectAtIndex:self.typeTagPopUpBotton.indexOfSelectedItem];
     BOOL shouldAddPort = shouldAddPortForType(type);
-    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.d", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.elements.content count]] : nil;
+    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
 
-    WBMessageElement* element = [WBMessageElement messageElementWithType:type portKey:portKey];
-    [self.plugIn performSelector:@selector(_addMessageElement:) withObject:element];
+    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:type, WBOSCMessageParameterTypeKey, portKey, WBOSCMessageParameterPortKey, nil];
+    [self.plugIn performSelector:@selector(_addMessageParameter:) withObject:param];
 }
 
-- (IBAction)removeMessageElement:(id)sender {
+- (IBAction)removeMessageParameter:(id)sender {
     CCDebugLogSelector();
 
-    NSUInteger selectionIndex = [self.elements selectionIndex];
+    NSUInteger selectionIndex = [self.parameters selectionIndex];
     if (selectionIndex == NSNotFound)
         return;
 
-    id element = [(NSArray*)self.elements.content objectAtIndex:selectionIndex];
-    [self.plugIn performSelector:@selector(_removeMessageElement:) withObject:element];
+    id param = [(NSArray*)self.parameters.content objectAtIndex:selectionIndex];
+    [self.plugIn performSelector:@selector(_removeMessageParameter:) withObject:param];
 }
 
 @end

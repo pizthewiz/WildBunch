@@ -9,10 +9,12 @@
 #import <Quartz/Quartz.h>
 #import <AppKit/AppKit.h>
 
-@interface WBOSCSenderViewController : QCPlugInViewController
-@property (nonatomic, assign) IBOutlet NSArrayController* elements;
-@property (nonatomic, assign) IBOutlet NSPopUpButton* typeTagPopUpBotton;
+extern NSString* const WBOSCMessageParameterTypeKey;
+extern NSString* const WBOSCMessageParameterPortKey;
 
-- (IBAction)addMessageElement:(id)sender;
-- (IBAction)removeMessageElement:(id)sender;
+@interface WBOSCSenderViewController : QCPlugInViewController
+@property (nonatomic, assign) IBOutlet NSArrayController* parameters;
+@property (nonatomic, assign) IBOutlet NSPopUpButton* typeTagPopUpBotton;
+- (IBAction)addMessageParameter:(id)sender;
+- (IBAction)removeMessageParameter:(id)sender;
 @end
