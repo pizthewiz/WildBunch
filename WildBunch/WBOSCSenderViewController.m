@@ -42,8 +42,14 @@ static BOOL shouldAddPortForType(NSString* type) {
 - (void)awakeFromNib {
     self.types = [NSArray arrayWithObjects:PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, PEOSCMessageTypeTagTrue, PEOSCMessageTypeTagFalse, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse, nil];
 
+    WBOSCMessageTypeTagTransformer* transformer = [[WBOSCMessageTypeTagTransformer alloc] init];
+    __block NSMutableArray* titles = [NSMutableArray array];
+    [self.types enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [titles addObject:[transformer transformedValue:obj]];
+    }];
+
     [self.typeTagPopUpBotton removeAllItems];
-    [self.typeTagPopUpBotton addItemsWithTitles:self.types];
+    [self.typeTagPopUpBotton addItemsWithTitles:titles];
 }
 
 #pragma mark -
