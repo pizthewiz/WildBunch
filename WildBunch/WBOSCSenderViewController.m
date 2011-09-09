@@ -9,6 +9,18 @@
 #import "WBOSCSenderViewController.h"
 #import "WildBunch.h"
 
+@implementation WBOSCMessageTypeTagTransformer
++ (Class)transformedValueClass {
+    return [NSString class];
+}
++ (BOOL)allowsReverseTransformation {
+    return NO;
+}
+- (id)transformedValue:(id)value {
+    return [PEOSCMessage displayNameForType:value];
+}
+@end
+
 NSString* const WBOSCMessageParameterTypeKey = @"WBOSCMessageParameterTypeKey";
 NSString* const WBOSCMessageParameterPortKey = @"WBOSCMessageParameterPortKey";
 

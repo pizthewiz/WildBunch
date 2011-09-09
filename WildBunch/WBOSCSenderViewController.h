@@ -12,6 +12,9 @@
 extern NSString* const WBOSCMessageParameterTypeKey;
 extern NSString* const WBOSCMessageParameterPortKey;
 
+@interface WBOSCMessageTypeTagTransformer : NSValueTransformer
+@end
+
 @interface WBOSCSenderViewController : QCPlugInViewController
 @property (nonatomic, assign) IBOutlet NSArrayController* parameters;
 @property (nonatomic, assign) IBOutlet NSPopUpButton* typeTagPopUpBotton;
