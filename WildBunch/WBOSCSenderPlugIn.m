@@ -107,6 +107,10 @@ static NSString* const WBSenderExampleCompositionName = @"";
     return self;
 }
 
+- (void)dealloc {
+    [self _tearDownSender];
+}
+
 #pragma mark -
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key {
@@ -128,8 +132,10 @@ static NSString* const WBSenderExampleCompositionName = @"";
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context {
-    if (self.host && ![self.host isEqualToString:@""] && self.port)
+    // setup sender when possible
+    if (self.host && ![self.host isEqualToString:@""] && self.port) {
         [self _buildUpSender];
+    }
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
@@ -144,7 +150,7 @@ static NSString* const WBSenderExampleCompositionName = @"";
         [self _buildUpSender];
     }
 
-    if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal) {
+    if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal && self.sender.isConnected) {
         NSArray* types = [self _types];
         if (!types.count) {
             CCErrorLog(@"ERROR - cannot send type-less message, consider using an Impulse instead");
@@ -168,14 +174,19 @@ static NSString* const WBSenderExampleCompositionName = @"";
 #pragma mark - PRIVATE
 
 - (void)_buildUpSender {
-    // NB - perhaps reconnect when possible
+    if (self.sender) {
+        [self _tearDownSender];
+    }
+
     PEOSCSender* s = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
     self.sender = s;
+    [self.sender connect];
 }
 
 - (void)_tearDownSender {
-    // NB - disconnect is probably more appropriate
-//    self.sender = nil;
+    if (self.sender.isConnected)
+        [self.sender disconnect];
+    self.sender = nil;
 }
 
 - (void)_addMessageParameter:(NSDictionary*)param {
