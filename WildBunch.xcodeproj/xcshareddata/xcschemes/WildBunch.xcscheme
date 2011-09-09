@@ -49,6 +49,9 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <PathRunnable
+         FilePath = "/Developer/Applications/Quartz Composer.app">
+      </PathRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
