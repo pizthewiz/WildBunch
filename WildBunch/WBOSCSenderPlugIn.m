@@ -168,12 +168,14 @@ static NSString* const WBSenderExampleCompositionName = @"";
 #pragma mark - PRIVATE
 
 - (void)_buildUpSender {
+    // NB - perhaps reconnect when possible
     PEOSCSender* s = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
-    self.sender = s;        
+    self.sender = s;
 }
 
 - (void)_tearDownSender {
-    self.sender = nil;
+    // NB - disconnect is probably more appropriate
+//    self.sender = nil;
 }
 
 - (void)_addMessageParameter:(NSDictionary*)param {
