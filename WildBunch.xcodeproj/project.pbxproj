@@ -16,6 +16,7 @@
 		D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8BA3B691416A4520076037F /* InfoPlist.strings */; };
 		D8BA3B6E1416A4520076037F /* WBOSCSenderPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BA3B6D1416A4520076037F /* WBOSCSenderPlugIn.m */; };
 		D8BA3B851416A7100076037F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B631416A4520076037F /* Foundation.framework */; };
+		D8F3E2E7141AA99C00EBE4DA /* Arp OSC Sender.qtz in Resources */ = {isa = PBXBuildFile; fileRef = D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		D8BA3B6C1416A4520076037F /* WBOSCSenderPlugIn.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBOSCSenderPlugIn.h; sourceTree = "<group>"; };
 		D8BA3B6D1416A4520076037F /* WBOSCSenderPlugIn.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBOSCSenderPlugIn.m; sourceTree = "<group>"; };
 		D8BA3B6F1416A4520076037F /* WildBunch-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WildBunch-Prefix.pch"; sourceTree = "<group>"; };
+		D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = "Arp OSC Sender.qtz"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +159,7 @@
 				D84ED0641416E7CB00AD4737 /* README.markdown */,
 				D84ED0621416E7CB00AD4737 /* CHANGELOG */,
 				D84ED0651416E7CB00AD4737 /* TODO */,
+				D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */,
 				D84ED0631416E7CB00AD4737 /* Rakefile */,
 			);
 			path = WildBunch;
@@ -262,6 +265,7 @@
 				D8BA3B6B1416A4520076037F /* InfoPlist.strings in Resources */,
 				D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */,
 				D84ED09414183AA100AD4737 /* Settings.xib in Resources */,
+				D8F3E2E7141AA99C00EBE4DA /* Arp OSC Sender.qtz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

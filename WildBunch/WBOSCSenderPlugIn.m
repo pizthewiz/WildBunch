@@ -21,7 +21,7 @@
 
 #pragma mark - PLUGIN
 
-static NSString* const WBSenderExampleCompositionName = @"";
+static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 
 @interface WBOSCSenderPlugIn()
 @property (nonatomic, strong) NSString* host;
