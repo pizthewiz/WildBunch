@@ -2,7 +2,9 @@
 SENDER
 [X] temporarily expose types input where the message types can be defined
 [X] add custom XIB to define message signatures
+[ ] investigate why paramater ports will not take direct settings, only when connected to others
 [ ] add settings checkbox to send on argument change
+[ ] use display strings for type popup and table
 
 RECEIVER
 …
