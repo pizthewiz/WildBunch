@@ -41,7 +41,7 @@ static BOOL shouldAddPortForType(NSString* type) {
 
     NSString* type = [self.types objectAtIndex:self.typeTagPopUpBotton.indexOfSelectedItem];
     BOOL shouldAddPort = shouldAddPortForType(type);
-    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"argument-%d.%d", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
+    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"arg%d-%d", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
 
     NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:type, WBOSCMessageParameterTypeKey, portKey, WBOSCMessageParameterPortKey, nil];
     [self.plugIn performSelector:@selector(_addMessageParameter:) withObject:param];
