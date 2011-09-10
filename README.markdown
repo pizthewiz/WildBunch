@@ -2,6 +2,9 @@
 # Wild Bunch
 a thin Quartz Composer plug-in for rich OSC communication
 
+### HOW TO INSTALL
+move WildBunch.plugin into ~/Library/Graphics/Quartz Composer Plug-Ins/
+
 ### GENERAL
 - the host can be defined as an IP address, symbolic hostname, ZeroConf hostname or with a fully qualified domain
 - the message address is a pattern that defines the routing intent for the message's receiver(s)
