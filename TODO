@@ -9,3 +9,7 @@ SENDER
 
 RECEIVER
 …
+
+MESSAGE
+[ ] consider representing the message as a struct and offering a builder patch
+[ ] offer message data patch that outputs a string for binary data, feed into BM serial writer
