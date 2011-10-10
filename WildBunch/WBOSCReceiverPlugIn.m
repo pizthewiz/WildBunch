@@ -13,12 +13,17 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 
 @interface WBOSCReceiverPlugIn()
 @property (nonatomic) NSUInteger port;
+@property (nonatomic, strong) PEOSCReceiver* receiver;
+@property (nonatomic) BOOL messageReceived;
+@property (nonatomic) BOOL messageReceivedSignalDidChange;
+- (void)_buildUpReceiver;
+- (void)_tearDownReceiver;
 @end
 
 @implementation WBOSCReceiverPlugIn
 
-@dynamic inputPort;
-@synthesize port;
+@dynamic inputPort, outputMessageReceived;
+@synthesize port, receiver, messageReceived, messageReceivedSignalDidChange;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -48,6 +53,8 @@ static NSString* const WBReceiverExampleCompositionName = @"";
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
             [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+    else if ([key isEqualToString:@"outputMessageReceived"])
+        return [NSDictionary dictionaryWithObject:@"Message Received" forKey:QCPortAttributeNameKey];
 	return nil;
 }
 
@@ -59,6 +66,12 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 	return kQCPlugInTimeModeIdle;
 }
 
+#pragma mark -
+
+- (void)dealloc {
+    [self _tearDownReceiver];
+}
+
 #pragma mark - EXECUTION
 
 - (BOOL)startExecution:(id <QCPlugInContext>)context {
@@ -66,16 +79,67 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 }
 
 - (void)enableExecution:(id <QCPlugInContext>)context {
+    // setup receiver when possible
+    if (self.port) {
+        [self _buildUpReceiver];
+    }
 }
 
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
+    // update outputs when appropriate
+    if (self.messageReceivedSignalDidChange) {
+        self.outputMessageReceived = self.messageReceived;
+        self.messageReceivedSignalDidChange = self.messageReceived;
+        self.messageReceived = NO;
+    }
+    
+    // negotiate new connection
+    if ([self didValueForInputKeyChange:@"inputPort"]) {
+        CCDebugLog(@"port changed, will negotiate new connection");
+
+        // store for safe keeping, may be needed stop/start
+        self.port = self.inputPort;
+
+        [self _buildUpReceiver];
+    }
+
 	return YES;
 }
 
 - (void)disableExecution:(id <QCPlugInContext>)context {
+    [self _tearDownReceiver];
 }
 
 - (void)stopExecution:(id <QCPlugInContext>)context {
+}
+
+#pragma mark - RECEIVER DELEGATE
+
+- (void)didReceiveMessage:(PEOSCMessage*)message {
+    CCDebugLog(@"got %@", message);
+    self.messageReceived = YES;
+    self.messageReceivedSignalDidChange = YES;
+}
+
+#pragma mark - PRIVATE
+
+- (void)_buildUpReceiver {
+    CCDebugLogSelector();
+    if (self.receiver) {
+        [self _tearDownReceiver];
+    }
+
+    PEOSCReceiver* r = [[PEOSCReceiver alloc] initWithPort:self.port];
+    self.receiver = r;
+    self.receiver.delegate = self;
+    [self.receiver connect];
+}
+
+- (void)_tearDownReceiver {
+    CCDebugLogSelector();
+    if (self.receiver.isConnected)
+        [self.receiver disconnect];
+    self.receiver = nil;
 }
 
 @end

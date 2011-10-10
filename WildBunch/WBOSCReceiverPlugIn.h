@@ -8,6 +8,7 @@
 
 #import <Quartz/Quartz.h>
 
-@interface WBOSCReceiverPlugIn : QCPlugIn
+@interface WBOSCReceiverPlugIn : QCPlugIn <PEOSCReceiverDelegate>
 @property (nonatomic) NSUInteger inputPort;
+@property (nonatomic) BOOL outputMessageReceived;
 @end
