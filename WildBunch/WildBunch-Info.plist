@@ -23,6 +23,7 @@
 	<key>QCPlugInClasses</key>
 	<array>
 		<string>WBOSCSenderPlugIn</string>
+		<string>WBOSCReceiverPlugIn</string>
 	</array>
 </dict>
 </plist>

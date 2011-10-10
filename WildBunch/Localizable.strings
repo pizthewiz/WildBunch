@@ -8,3 +8,6 @@
 
 "WBOSCSenderName" = "OSC Message Sender";
 "WBOSCSenderDescription" = "WILD BUNCH!";
+
+"WBOSCReceiverName" = "OSC Message Receiver";
+"WBOSCReceiverDescription" = "WILD BUNCH!";
