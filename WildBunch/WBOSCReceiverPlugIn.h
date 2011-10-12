@@ -10,5 +10,7 @@
 
 @interface WBOSCReceiverPlugIn : QCPlugIn <PEOSCReceiverDelegate>
 @property (nonatomic) NSUInteger inputPort;
+@property (nonatomic, weak) NSArray* outputMessage;
+@property (nonatomic, weak) NSString* outputMessageAddress;
 @property (nonatomic) BOOL outputMessageReceived;
 @end

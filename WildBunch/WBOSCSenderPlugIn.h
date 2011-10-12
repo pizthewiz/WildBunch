@@ -9,8 +9,8 @@
 #import <Quartz/Quartz.h>
 
 @interface WBOSCSenderPlugIn : QCPlugIn
-@property (nonatomic, strong) NSString* inputHost;
+@property (nonatomic, weak) NSString* inputHost;
 @property (nonatomic) NSUInteger inputPort;
 @property (nonatomic) BOOL inputSendSignal;
-@property (nonatomic, strong) NSString* inputAddress;
+@property (nonatomic, weak) NSString* inputAddress;
 @end

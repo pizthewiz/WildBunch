@@ -14,6 +14,7 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 @interface WBOSCReceiverPlugIn()
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, strong) PEOSCReceiver* receiver;
+@property (nonatomic, strong) PEOSCMessage* message;
 @property (nonatomic) BOOL messageReceived;
 @property (nonatomic) BOOL messageReceivedSignalDidChange;
 - (void)_buildUpReceiver;
@@ -22,8 +23,8 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 
 @implementation WBOSCReceiverPlugIn
 
-@dynamic inputPort, outputMessageReceived;
-@synthesize port, receiver, messageReceived, messageReceivedSignalDidChange;
+@dynamic inputPort, outputMessage, outputMessageAddress, outputMessageReceived;
+@synthesize port, receiver, message, messageReceived, messageReceivedSignalDidChange;
 
 + (NSDictionary*)attributes {
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
@@ -53,6 +54,10 @@ static NSString* const WBReceiverExampleCompositionName = @"";
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
             [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+    else if ([key isEqualToString:@"outputMessage"])
+        return [NSDictionary dictionaryWithObject:@"Message" forKey:QCPortAttributeNameKey];
+    else if ([key isEqualToString:@"outputMessageAddress"])
+        return [NSDictionary dictionaryWithObject:@"Message Address" forKey:QCPortAttributeNameKey];
     else if ([key isEqualToString:@"outputMessageReceived"])
         return [NSDictionary dictionaryWithObject:@"Message Received" forKey:QCPortAttributeNameKey];
 	return nil;
@@ -88,11 +93,22 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
     // update outputs when appropriate
     if (self.messageReceivedSignalDidChange) {
+        if (self.messageReceivedSignalDidChange) {
+            // cheap dump of args to struct
+            __block NSMutableArray* structure = [NSMutableArray array];
+            [self.message enumerateTypesAndArgumentsUsingBlock:^(id type, id argument, BOOL *stop) {
+                [structure addObject:argument];
+            }];
+            self.outputMessage = structure;
+
+            self.outputMessageAddress = self.message.address;
+        }
+
         self.outputMessageReceived = self.messageReceived;
         self.messageReceivedSignalDidChange = self.messageReceived;
         self.messageReceived = NO;
     }
-    
+
     // negotiate new connection
     if ([self didValueForInputKeyChange:@"inputPort"]) {
         CCDebugLog(@"port changed, will negotiate new connection");
@@ -115,8 +131,8 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 
 #pragma mark - RECEIVER DELEGATE
 
-- (void)didReceiveMessage:(PEOSCMessage*)message {
-    CCDebugLog(@"got %@", message);
+- (void)didReceiveMessage:(PEOSCMessage*)m {
+    self.message = m;
     self.messageReceived = YES;
     self.messageReceivedSignalDidChange = YES;
 }
