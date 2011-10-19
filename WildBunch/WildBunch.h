@@ -18,4 +18,5 @@
     #define CCErrorLog(a...) NSLog(a)
 #endif
 
+#define CCPlugInBundle() [NSBundle bundleForClass:[self class]]
 #define CCLocalizedString(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:(nil)]

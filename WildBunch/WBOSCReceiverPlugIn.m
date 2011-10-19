@@ -27,25 +27,12 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 @synthesize port, receiver, message, messageReceived, messageReceivedSignalDidChange;
 
 + (NSDictionary*)attributes {
-    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-        CCLocalizedString(@"WBOSCReceiverName", NULL), QCPlugInAttributeNameKey, 
-        CCLocalizedString(@"WBOSCReceiverDescription", NULL), QCPlugInAttributeDescriptionKey, 
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+        CCLocalizedString(@"WBOSCSenderName", NULL), QCPlugInAttributeNameKey, 
+        CCLocalizedString(@"WBOSCSenderDescription", NULL), QCPlugInAttributeDescriptionKey, 
+        [NSArray arrayWithObjects:@"Network", nil], QCPlugInAttributeCategoriesKey, 
+        [NSArray arrayWithObjects:[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"], nil], QCPlugInAttributeExamplesKey, 
         nil];
-
-#if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
-    if (&QCPlugInAttributeCategoriesKey != NULL) {
-        // array with category strings
-        NSArray* categories = [NSArray arrayWithObjects:@"Network", nil];
-        [attributes setObject:categories forKey:QCPlugInAttributeCategoriesKey];
-    }
-    if (&QCPlugInAttributeExamplesKey != NULL) {
-        // array of file paths or urls relative to plugin resources
-        NSArray* examples = [NSArray arrayWithObjects:[[NSBundle bundleForClass:[self class]] URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"], nil];
-        [attributes setObject:examples forKey:QCPlugInAttributeExamplesKey];
-    }
-#endif
-
-    return (NSDictionary*)attributes;
 }
 
 + (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
@@ -53,7 +40,8 @@ static NSString* const WBReceiverExampleCompositionName = @"";
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
-            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, 
+            nil];
     else if ([key isEqualToString:@"outputMessage"])
         return [NSDictionary dictionaryWithObject:@"Message" forKey:QCPortAttributeNameKey];
     else if ([key isEqualToString:@"outputMessageAddress"])

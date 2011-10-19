@@ -43,25 +43,12 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 @synthesize host, port, messageParameters, sender;
 
 + (NSDictionary*)attributes {
-    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
         CCLocalizedString(@"WBOSCSenderName", NULL), QCPlugInAttributeNameKey, 
         CCLocalizedString(@"WBOSCSenderDescription", NULL), QCPlugInAttributeDescriptionKey, 
+        [NSArray arrayWithObjects:@"Network", nil], QCPlugInAttributeCategoriesKey, 
+        [NSArray arrayWithObjects:[CCPlugInBundle() URLForResource:WBSenderExampleCompositionName withExtension:@"qtz"], nil], QCPlugInAttributeExamplesKey, 
         nil];
-
-#if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7)
-    if (&QCPlugInAttributeCategoriesKey != NULL) {
-        // array with category strings
-        NSArray* categories = [NSArray arrayWithObjects:@"Network", nil];
-        [attributes setObject:categories forKey:QCPlugInAttributeCategoriesKey];
-    }
-    if (&QCPlugInAttributeExamplesKey != NULL) {
-        // array of file paths or urls relative to plugin resources
-        NSArray* examples = [NSArray arrayWithObjects:[[NSBundle bundleForClass:[self class]] URLForResource:WBSenderExampleCompositionName withExtension:@"qtz"], nil];
-        [attributes setObject:examples forKey:QCPlugInAttributeExamplesKey];
-    }
-#endif
-
-    return (NSDictionary*)attributes;
 }
 
 + (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
@@ -71,7 +58,8 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
             [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
             [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
-            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, nil];
+            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, 
+            nil];
     else if ([key isEqualToString:@"inputSendSignal"])
         return [NSDictionary dictionaryWithObjectsAndKeys:@"Send Signal", QCPortAttributeNameKey, nil];
     else if ([key isEqualToString:@"inputAddress"])
@@ -215,7 +203,7 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Integer", QCPortAttributeNameKey, [NSNumber numberWithInt:INT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithInt:INT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithInt:0], QCPortAttributeDefaultValueKey, nil];
             [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
         } else if ([type isEqualToString:PEOSCMessageTypeTagFloat]) {
-            // NB - setting min and max seemes to mess up the 0.0 value to 1.175e-38
+            // NB - setting min and max seemes to blow out the 0.0 value, which then gets set to 1.175e-38
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, /*[NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeMaximumValueKey,*/ [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
             [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
         } else if ([type isEqualToString:PEOSCMessageTypeTagString]) {
