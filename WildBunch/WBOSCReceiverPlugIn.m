@@ -85,7 +85,24 @@ static NSString* const WBReceiverExampleCompositionName = @"";
             // cheap dump of args to struct
             __block NSMutableArray* structure = [NSMutableArray array];
             [self.message enumerateTypesAndArgumentsUsingBlock:^(id type, id argument, BOOL *stop) {
-                [structure addObject:argument];
+                if (!argument) {
+                    if ([type isEqualToString:PEOSCMessageTypeTagTrue]) {
+                        argument = [NSNumber numberWithBool:YES];
+                    } else if ([type isEqualToString:PEOSCMessageTypeTagFalse]) {
+                        argument = [NSNumber numberWithBool:NO];
+                    } else if ([type isEqualToString:PEOSCMessageTypeTagImpulse]) {
+                        // TODO - this should have special handling to actually pulse
+                        argument = [NSNumber numberWithBool:YES];
+                    } else if ([type isEqualToString:PEOSCMessageTypeTagNull]) {
+                        // TODO - this should have special handling too
+                        argument = [NSNull null];
+                    }
+                }
+
+                if (!argument)
+                    return;
+
+                [structure addObject:[NSDictionary dictionaryWithObject:argument forKey:[PEOSCMessage displayNameForType:type]]];
             }];
             self.outputMessage = structure;
 
