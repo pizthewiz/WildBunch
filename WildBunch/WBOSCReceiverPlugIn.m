@@ -28,8 +28,8 @@ static NSString* const WBReceiverExampleCompositionName = @"";
 
 + (NSDictionary*)attributes {
     return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-        CCLocalizedString(@"WBOSCSenderName", NULL), QCPlugInAttributeNameKey, 
-        CCLocalizedString(@"WBOSCSenderDescription", NULL), QCPlugInAttributeDescriptionKey, 
+        CCLocalizedString(@"WBOSCReceiverName", NULL), QCPlugInAttributeNameKey, 
+        CCLocalizedString(@"WBOSCReceiverDescription", NULL), QCPlugInAttributeDescriptionKey, 
         [NSArray arrayWithObjects:@"Network", nil], QCPlugInAttributeCategoriesKey, 
         [NSArray arrayWithObjects:[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"], nil], QCPlugInAttributeExamplesKey, 
         nil];
