@@ -9,6 +9,7 @@ SENDER
 
 RECEIVER
 [X] add skeleton with port in, message and changed outputs
+[ ] explore receiver routing
 
 MESSAGE
 [ ] represent the message as a struct and offer a builder and reader patch?
