@@ -23,10 +23,14 @@
 
 NSString* const WBOSCMessageParameterTypeKey = @"WBOSCMessageParameterTypeKey";
 NSString* const WBOSCMessageParameterPortKey = @"WBOSCMessageParameterPortKey";
+// synthesize a Boolean type over True and False
+NSString* const WBOSCMessageTypeTagBoolean = @"WBOSCMessageTypeTagBoolean";
+NSString* const WBOSCMessageTypeTagBooleanTitle = @"Boolean";
+
 
 static BOOL shouldAddPortForType(NSString* type) {
     BOOL status = NO;
-    if ([type isEqualToString:PEOSCMessageTypeTagInteger] || [type isEqualToString:PEOSCMessageTypeTagFloat] || [type isEqualToString:PEOSCMessageTypeTagString] || [type isEqualToString:PEOSCMessageTypeTagBlob])
+    if ([type isEqualToString:PEOSCMessageTypeTagInteger] || [type isEqualToString:PEOSCMessageTypeTagFloat] || [type isEqualToString:PEOSCMessageTypeTagString] || [type isEqualToString:WBOSCMessageTypeTagBoolean] || [type isEqualToString:PEOSCMessageTypeTagBlob])
         status = YES;
     return status;
 }
@@ -40,12 +44,16 @@ static BOOL shouldAddPortForType(NSString* type) {
 @synthesize parameters, typeTagPopUpBotton, types;
 
 - (void)awakeFromNib {
-    self.types = [NSArray arrayWithObjects:PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, PEOSCMessageTypeTagTrue, PEOSCMessageTypeTagFalse, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse, nil];
+    self.types = [NSArray arrayWithObjects:PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, WBOSCMessageTypeTagBoolean, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse, nil];
 
     WBOSCMessageTypeTagTransformer* transformer = [[WBOSCMessageTypeTagTransformer alloc] init];
     __block NSMutableArray* titles = [NSMutableArray array];
     [self.types enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [titles addObject:[transformer transformedValue:obj]];
+        if (obj == WBOSCMessageTypeTagBoolean) {
+            [titles addObject:WBOSCMessageTypeTagBooleanTitle];
+        } else {
+            [titles addObject:[transformer transformedValue:obj]];
+        }
     }];
 
     [self.typeTagPopUpBotton removeAllItems];

@@ -209,6 +209,9 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         } else if ([type isEqualToString:PEOSCMessageTypeTagString]) {
             NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC String", QCPortAttributeNameKey, @"Log Lady", QCPortAttributeDefaultValueKey, nil];
             [self addInputPortWithType:QCPortTypeString forKey:portKey withAttributes:attributes];
+        } else if ([type isEqualToString:WBOSCMessageTypeTagBoolean]) {
+            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Boolean", QCPortAttributeNameKey, nil];
+            [self addInputPortWithType:QCPortTypeBoolean forKey:portKey withAttributes:attributes];
         }
     }
 }
@@ -216,7 +219,13 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 - (NSArray*)_types {
     NSMutableArray* types = [NSMutableArray array];
     for (NSDictionary* param in self.messageParameters) {
-        [types addObject:[param objectForKey:WBOSCMessageParameterTypeKey]];
+        NSString* type = [param objectForKey:WBOSCMessageParameterTypeKey];
+        if ([type isEqualToString:WBOSCMessageTypeTagBoolean]) {
+            // divine proper type from value
+            id value = [self valueForInputKey:[param objectForKey:WBOSCMessageParameterPortKey]];
+            type = [(NSNumber*)value boolValue] ? PEOSCMessageTypeTagTrue : PEOSCMessageTypeTagFalse;
+        }
+        [types addObject:type];
     }
     return (NSArray*)types;
 }
@@ -224,8 +233,15 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 - (NSArray*)_arguments {
     NSMutableArray* args = [[NSMutableArray alloc] init];
     for (NSDictionary* param in self.messageParameters) {
+        // ignore synthesized Boolean type
+        NSString* type = [param objectForKey:WBOSCMessageParameterTypeKey];
+        if ([type isEqualToString:WBOSCMessageTypeTagBoolean])
+            continue;
+
+        // ignore arg-less params
         if (![param hasKey:WBOSCMessageParameterPortKey])
             continue;
+
         id value = [self valueForInputKey:[param objectForKey:WBOSCMessageParameterPortKey]];
         [args addObject:value];
     }

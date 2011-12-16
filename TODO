@@ -5,11 +5,12 @@ SENDER
 [X] investigate why paramater ports will not take direct settings, only when connected to others
 [X] use display strings for type popup and table
 [ ] add settings checkbox to send on argument change
-[ ] expose Boolean arguments directly, the inspector should not set a fixed value
+[X] expose Boolean arguments directly, the inspector should not set a fixed value
 
 RECEIVER
 [X] add skeleton with port in, message and changed outputs
 [ ] explore receiver routing
+[ ] how to handle Null and Impulse
 
 MESSAGE
 [ ] represent the message as a struct and offer a builder and reader patch?

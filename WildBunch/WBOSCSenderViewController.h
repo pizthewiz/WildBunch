@@ -11,6 +11,7 @@
 
 extern NSString* const WBOSCMessageParameterTypeKey;
 extern NSString* const WBOSCMessageParameterPortKey;
+extern NSString* const WBOSCMessageTypeTagBoolean;
 
 @interface WBOSCMessageTypeTagTransformer : NSValueTransformer
 @end
