@@ -3,7 +3,7 @@
 //  WildBunch
 //
 //  Created by Jean-Pierre Mouilleseaux on 09 Oct 2011.
-//  Copyright (c) 2011 Chorded Constructions. All rights reserved.
+//  Copyright (c) 2011-2012 Chorded Constructions. All rights reserved.
 //
 
 #import "WBOSCReceiverPlugIn.h"
@@ -153,13 +153,14 @@ static NSString* const WBReceiverExampleCompositionName = @"";
     PEOSCReceiver* r = [[PEOSCReceiver alloc] initWithPort:self.port];
     self.receiver = r;
     self.receiver.delegate = self;
-    [self.receiver connect];
+    [self.receiver beginListening];
 }
 
 - (void)_tearDownReceiver {
     CCDebugLogSelector();
-    if (self.receiver.isConnected)
-        [self.receiver disconnect];
+    if (self.receiver.isListening) {
+        [self.receiver stopListening];
+    }
     self.receiver = nil;
 }
 
