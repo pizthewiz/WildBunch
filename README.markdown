@@ -23,4 +23,4 @@ the Apple OSC sender only allows one to send an OSC message with a single parama
 - Jonathan del Strother for his more full-featured [BBOSC](https://github.com/jdelStrother/BBOSC) QC plug-ins
 - Ray Cutler for his conical OSC implementation in [VVOpenSource](http://code.google.com/p/vvopensource/)
 - Mirek Rusin for inspiration and reference with his [CoreOSC](https://github.com/mirek/CoreOSC/) library
-- The [AsyncSocket](http://code.google.com/p/cocoaasyncsocket/) crew for a convenient UDP socket wrapper
+- The [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) crew for a convenient UDP socket wrapper
