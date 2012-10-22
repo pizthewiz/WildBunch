@@ -9,7 +9,7 @@
 #import "WBOSCReceiverPlugIn.h"
 #import "WildBunch.h"
 
-static NSString* const WBReceiverExampleCompositionName = @"";
+static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
 
 @interface WBOSCReceiverPlugIn()
 @property (nonatomic) NSUInteger port;
@@ -153,7 +153,10 @@ static NSString* const WBReceiverExampleCompositionName = @"";
     PEOSCReceiver* r = [[PEOSCReceiver alloc] initWithPort:self.port];
     self.receiver = r;
     self.receiver.delegate = self;
-    [self.receiver beginListening];
+    BOOL status = [self.receiver beginListening];
+    if (!status) {
+        CCErrorLog(@"ERROR - failed to build up receiver");
+    }
 }
 
 - (void)_tearDownReceiver {
