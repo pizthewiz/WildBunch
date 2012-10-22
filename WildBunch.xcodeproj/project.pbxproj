@@ -68,13 +68,13 @@
 /* Begin PBXFileReference section */
 		D84ED05C1416DA7600AD4737 /* WildBunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildBunch.h; sourceTree = "<group>"; };
 		D84ED0601416DD7300AD4737 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		D84ED0621416E7CB00AD4737 /* CHANGELOG */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG; sourceTree = SOURCE_ROOT; };
 		D84ED0631416E7CB00AD4737 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = SOURCE_ROOT; };
-		D84ED0641416E7CB00AD4737 /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
-		D84ED0651416E7CB00AD4737 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = SOURCE_ROOT; };
 		D84ED09314183AA100AD4737 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		D84ED0A414192E6C00AD4737 /* WBOSCSenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCSenderViewController.h; sourceTree = "<group>"; };
 		D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCSenderViewController.m; sourceTree = "<group>"; };
+		D8509D2D1635DBC000CF2F14 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
+		D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
+		D8509D2F1635DBDF00CF2F14 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.md; sourceTree = SOURCE_ROOT; };
 		D899B5821442A6F10059A19F /* WBOSCReceiverPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCReceiverPlugIn.h; sourceTree = "<group>"; };
 		D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCReceiverPlugIn.m; sourceTree = "<group>"; };
 		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
@@ -161,9 +161,9 @@
 				D899B5821442A6F10059A19F /* WBOSCReceiverPlugIn.h */,
 				D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */,
 				D8BA3B671416A4520076037F /* Supporting Files */,
-				D84ED0641416E7CB00AD4737 /* README.markdown */,
-				D84ED0621416E7CB00AD4737 /* CHANGELOG */,
-				D84ED0651416E7CB00AD4737 /* TODO */,
+				D8509D2D1635DBC000CF2F14 /* README.md */,
+				D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */,
+				D8509D2F1635DBDF00CF2F14 /* TODO.md */,
 				D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */,
 				D84ED0631416E7CB00AD4737 /* Rakefile */,
 			);
@@ -212,7 +212,7 @@
 		D8BA3B4F1416A4520076037F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Chorded Constructions";
 			};
 			buildConfigurationList = D8BA3B521416A4520076037F /* Build configuration list for PBXProject "WildBunch" */;
@@ -396,6 +396,7 @@
 		D8BA3B731416A4520076037F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
 				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
@@ -409,6 +410,7 @@
 		D8BA3B741416A4520076037F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WildBunch/WildBunch-Prefix.pch";
 				INFOPLIST_FILE = "WildBunch/WildBunch-Info.plist";
