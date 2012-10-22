@@ -68,13 +68,13 @@
 /* Begin PBXFileReference section */
 		D84ED05C1416DA7600AD4737 /* WildBunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildBunch.h; sourceTree = "<group>"; };
 		D84ED0601416DD7300AD4737 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		D84ED0631416E7CB00AD4737 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = SOURCE_ROOT; };
 		D84ED09314183AA100AD4737 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		D84ED0A414192E6C00AD4737 /* WBOSCSenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCSenderViewController.h; sourceTree = "<group>"; };
 		D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCSenderViewController.m; sourceTree = "<group>"; };
 		D8509D2D1635DBC000CF2F14 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		D8509D2F1635DBDF00CF2F14 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.md; sourceTree = SOURCE_ROOT; };
+		D8509D301635DD4B00CF2F14 /* Jakefile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Jakefile.js; sourceTree = SOURCE_ROOT; };
 		D899B5821442A6F10059A19F /* WBOSCReceiverPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCReceiverPlugIn.h; sourceTree = "<group>"; };
 		D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCReceiverPlugIn.m; sourceTree = "<group>"; };
 		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
@@ -161,11 +161,11 @@
 				D899B5821442A6F10059A19F /* WBOSCReceiverPlugIn.h */,
 				D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */,
 				D8BA3B671416A4520076037F /* Supporting Files */,
+				D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */,
 				D8509D2D1635DBC000CF2F14 /* README.md */,
 				D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */,
 				D8509D2F1635DBDF00CF2F14 /* TODO.md */,
-				D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */,
-				D84ED0631416E7CB00AD4737 /* Rakefile */,
+				D8509D301635DD4B00CF2F14 /* Jakefile.js */,
 			);
 			path = WildBunch;
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 				D8BA3B551416A4520076037F /* Frameworks */,
 				D8BA3B561416A4520076037F /* Resources */,
 				D8A11AC11416D15600AA3713 /* Copy Frameworks */,
-				D8BA3B841416A63A0076037F /* Update Info.plist With git Info */,
+				D8BA3B841416A63A0076037F /* Set Bundle Version */,
 				D8BA3B571416A4520076037F /* Copy Plug-In Into Place */,
 			);
 			buildRules = (
@@ -291,19 +291,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# This shell script simply copies the built plug-in to \"~/Library/Graphics/Quartz Composer Plug-Ins\" and overrides any previous version at that location\n\nmkdir -p \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins\"\nrm -rf \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/WildBunch.plugin\"\nditto \"$BUILT_PRODUCTS_DIR/WildBunch.plugin\" \"$USER_LIBRARY_DIR/Graphics/Quartz Composer Plug-Ins/WildBunch.plugin\"\n";
 		};
-		D8BA3B841416A63A0076037F /* Update Info.plist With git Info */ = {
+		D8BA3B841416A63A0076037F /* Set Bundle Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Update Info.plist With git Info";
+			name = "Set Bundle Version";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/macrake update_bundle_version\n";
+			shellScript = "if [ -f /usr/local/bin/jake ]; then\n    PATH=$PATH:/usr/local/bin jake update\nelse\n    echo \"WARNING - could not find jake, bundle versions left unset\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
