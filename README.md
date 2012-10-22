@@ -7,7 +7,6 @@ move `WildBunch.plugin` into `~/Library/Graphics/Quartz Composer Plug-Ins/`
 
 #### HOW TO BUILD
 - clone the repository and submodules `git clone --recursive git://github.com/pizthewiz/WildBunch.git`
-- [MacRuby](http://www.macruby.org/) is used to automate versioning of builds based on the current git revision, install it
 - load up the project in Xcode, select the WildBunch scheme and build
 
 ## GENERAL
