@@ -68,7 +68,7 @@ static BOOL shouldAddPortForType(NSString* type) {
     NSString* type = [self.types objectAtIndex:self.typeTagPopUpBotton.indexOfSelectedItem];
     BOOL shouldAddPort = shouldAddPortForType(type);
     // AVOID - rdar://problem/10100572 QCPlugIn - inspector fails to display dynamic port values with dot in key name
-    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"arg%d-%d", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
+    NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"arg%ld-%ld", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
 
     NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:type, WBOSCMessageParameterTypeKey, portKey, WBOSCMessageParameterPortKey, nil];
     [self.plugIn performSelector:@selector(_addMessageParameter:) withObject:param];
