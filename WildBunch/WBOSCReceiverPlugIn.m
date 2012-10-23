@@ -17,37 +17,30 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
 @property (nonatomic, strong) PEOSCMessage* message;
 @property (nonatomic) BOOL messageReceived;
 @property (nonatomic) BOOL messageReceivedSignalDidChange;
-- (void)_buildUpReceiver;
-- (void)_tearDownReceiver;
 @end
 
 @implementation WBOSCReceiverPlugIn
 
 @dynamic inputPort, outputMessage, outputMessageAddress, outputMessageReceived;
-@synthesize port, receiver, message, messageReceived, messageReceivedSignalDidChange;
 
 + (NSDictionary*)attributes {
-    return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-        CCLocalizedString(@"WBOSCReceiverName", NULL), QCPlugInAttributeNameKey, 
-        CCLocalizedString(@"WBOSCReceiverDescription", NULL), QCPlugInAttributeDescriptionKey, 
-        [NSArray arrayWithObjects:@"Network", nil], QCPlugInAttributeCategoriesKey, 
-        [NSArray arrayWithObjects:[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"], nil], QCPlugInAttributeExamplesKey, 
-        nil];
+    return @{
+        QCPlugInAttributeNameKey: CCLocalizedString(@"WBOSCReceiverName", NULL),
+        QCPlugInAttributeDescriptionKey: CCLocalizedString(@"WBOSCReceiverDescription", NULL),
+        QCPlugInAttributeCategoriesKey: @[@"Network"],
+//        QCPlugInAttributeExamplesKey: @[[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"]]
+    };
 }
 
 + (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
     if ([key isEqualToString:@"inputPort"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
-            [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
-            [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
-            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, 
-            nil];
+        return @{QCPortAttributeNameKey: @"Port", QCPortAttributeMinimumValueKey: @0, QCPortAttributeMaximumValueKey: @65536, QCPortAttributeDefaultValueKey: @7777};
     else if ([key isEqualToString:@"outputMessage"])
-        return [NSDictionary dictionaryWithObject:@"Message" forKey:QCPortAttributeNameKey];
+        return @{QCPortAttributeNameKey: @"Message"};
     else if ([key isEqualToString:@"outputMessageAddress"])
-        return [NSDictionary dictionaryWithObject:@"Message Address" forKey:QCPortAttributeNameKey];
+        return @{QCPortAttributeNameKey: @"Message Address"};
     else if ([key isEqualToString:@"outputMessageReceived"])
-        return [NSDictionary dictionaryWithObject:@"Message Received" forKey:QCPortAttributeNameKey];
+        return @{QCPortAttributeNameKey: @"Message Received"};
 	return nil;
 }
 
@@ -87,12 +80,12 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
             [self.message enumerateTypesAndArgumentsUsingBlock:^(id type, id argument, BOOL *stop) {
                 if (!argument) {
                     if ([type isEqualToString:PEOSCMessageTypeTagTrue]) {
-                        argument = [NSNumber numberWithBool:YES];
+                        argument = @YES;
                     } else if ([type isEqualToString:PEOSCMessageTypeTagFalse]) {
-                        argument = [NSNumber numberWithBool:NO];
+                        argument = @NO;
                     } else if ([type isEqualToString:PEOSCMessageTypeTagImpulse]) {
                         // TODO - this should have special handling to actually pulse
-                        argument = [NSNumber numberWithBool:YES];
+                        argument = @YES;
                     } else if ([type isEqualToString:PEOSCMessageTypeTagNull]) {
                         // TODO - this should have special handling too
                         argument = [NSNull null];
@@ -102,7 +95,7 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
                 if (!argument)
                     return;
 
-                [structure addObject:[NSDictionary dictionaryWithObject:argument forKey:[PEOSCMessage displayNameForType:type]]];
+                [structure addObject:@{[PEOSCMessage displayNameForType:type]: argument}];
             }];
             self.outputMessage = structure;
 

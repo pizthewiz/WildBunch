@@ -44,7 +44,7 @@ static BOOL shouldAddPortForType(NSString* type) {
 @synthesize parameters, typeTagPopUpBotton, types;
 
 - (void)awakeFromNib {
-    self.types = [NSArray arrayWithObjects:PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, WBOSCMessageTypeTagBoolean, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse, nil];
+    self.types = @[PEOSCMessageTypeTagInteger, PEOSCMessageTypeTagFloat, PEOSCMessageTypeTagString, WBOSCMessageTypeTagBoolean, PEOSCMessageTypeTagNull, PEOSCMessageTypeTagImpulse];
 
     WBOSCMessageTypeTagTransformer* transformer = [[WBOSCMessageTypeTagTransformer alloc] init];
     __block NSMutableArray* titles = [NSMutableArray array];
@@ -70,7 +70,7 @@ static BOOL shouldAddPortForType(NSString* type) {
     // AVOID - rdar://problem/10100572 QCPlugIn - inspector fails to display dynamic port values with dot in key name
     NSString* portKey = shouldAddPort ? [NSString stringWithFormat:@"arg%ld-%ld", (long)[[NSDate date] timeIntervalSince1970], [(NSArray*)self.parameters.content count]] : nil;
 
-    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:type, WBOSCMessageParameterTypeKey, portKey, WBOSCMessageParameterPortKey, nil];
+    NSDictionary* param = @{WBOSCMessageParameterTypeKey: type, WBOSCMessageParameterPortKey: portKey};
     [self.plugIn performSelector:@selector(_addMessageParameter:) withObject:param];
 }
 

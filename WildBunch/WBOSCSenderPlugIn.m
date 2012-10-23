@@ -28,42 +28,30 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, strong) NSMutableArray* messageParameters;
 @property (nonatomic, strong) PEOSCSender* sender;
-- (void)_buildUpSender;
-- (void)_tearDownSender;
-- (void)_addMessageParameter:(NSDictionary*)param;
-- (void)_removeMessageParameter:(NSDictionary*)param;
-- (void)_addPortForMessageParameter:(NSDictionary*)param;
-- (NSArray*)_types;
-- (NSArray*)_arguments;
 @end
 
 @implementation WBOSCSenderPlugIn
 
 @dynamic inputHost, inputPort, inputSendSignal, inputAddress;
-@synthesize host, port, messageParameters, sender;
 
 + (NSDictionary*)attributes {
-    return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-        CCLocalizedString(@"WBOSCSenderName", NULL), QCPlugInAttributeNameKey, 
-        CCLocalizedString(@"WBOSCSenderDescription", NULL), QCPlugInAttributeDescriptionKey, 
-        [NSArray arrayWithObjects:@"Network", nil], QCPlugInAttributeCategoriesKey, 
-        [NSArray arrayWithObjects:[CCPlugInBundle() URLForResource:WBSenderExampleCompositionName withExtension:@"qtz"], nil], QCPlugInAttributeExamplesKey, 
-        nil];
+    return @{
+        QCPlugInAttributeNameKey: CCLocalizedString(@"WBOSCSenderName", NULL),
+        QCPlugInAttributeDescriptionKey: CCLocalizedString(@"WBOSCSenderDescription", NULL),
+        QCPlugInAttributeCategoriesKey: @[@"Network"],
+        QCPlugInAttributeExamplesKey: @[[CCPlugInBundle() URLForResource:WBSenderExampleCompositionName withExtension:@"qtz"]]
+    };
 }
 
 + (NSDictionary*)attributesForPropertyPortWithKey:(NSString*)key {
     if ([key isEqualToString:@"inputHost"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Host", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"0.0.0.0", QCPortAttributeDefaultValueKey, nil];
+        return @{QCPortAttributeNameKey: @"Host", QCPortAttributeTypeKey: QCPortTypeString, QCPortAttributeDefaultValueKey: @"0.0.0.0"};
     else if ([key isEqualToString:@"inputPort"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Port", QCPortAttributeNameKey, 
-            [NSNumber numberWithUnsignedInteger:0], QCPortAttributeMinimumValueKey, 
-            [NSNumber numberWithUnsignedInteger:65536], QCPortAttributeMaximumValueKey, 
-            [NSNumber numberWithUnsignedInteger:7777], QCPortAttributeDefaultValueKey, 
-            nil];
+        return @{QCPortAttributeNameKey: @"Port", QCPortAttributeMinimumValueKey: @0, QCPortAttributeMaximumValueKey: @65536, QCPortAttributeDefaultValueKey: @7777};
     else if ([key isEqualToString:@"inputSendSignal"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Send Signal", QCPortAttributeNameKey, nil];
+        return @{QCPortAttributeNameKey: @"Send Signal"};
     else if ([key isEqualToString:@"inputAddress"])
-        return [NSDictionary dictionaryWithObjectsAndKeys:@"Address", QCPortAttributeNameKey, QCPortTypeString, QCPortAttributeTypeKey, @"/oscillator/3/frequency", QCPortAttributeDefaultValueKey, nil];
+        return @{QCPortAttributeNameKey: @"Address", QCPortAttributeTypeKey: QCPortTypeString, QCPortAttributeDefaultValueKey: @"/oscillator/3/frequency"};
 	return nil;
 }
 
@@ -76,7 +64,7 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 }
 
 + (NSArray*)plugInKeys {
-    return [NSArray arrayWithObjects:@"messageParameters", nil];
+    return @[@"messageParameters"];
 }
 
 #pragma mark -
@@ -196,17 +184,18 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         NSString* type = [param objectForKey:WBOSCMessageParameterTypeKey];
         NSString* portKey = [param objectForKey:WBOSCMessageParameterPortKey];
         if ([type isEqualToString:PEOSCMessageTypeTagInteger]) {
-            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Integer", QCPortAttributeNameKey, [NSNumber numberWithInt:INT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithInt:INT_MAX], QCPortAttributeMaximumValueKey, [NSNumber numberWithInt:0], QCPortAttributeDefaultValueKey, nil];
+            NSDictionary* attributes = @{QCPortAttributeNameKey: @"OSC Integer", QCPortAttributeMinimumValueKey: @(INT_MIN), QCPortAttributeMaximumValueKey: @(INT_MAX), QCPortAttributeDefaultValueKey: @0};
             [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
         } else if ([type isEqualToString:PEOSCMessageTypeTagFloat]) {
             // NB - setting min and max seemes to blow out the 0.0 value, which then gets set to 1.175e-38
-            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Float", QCPortAttributeNameKey, /*[NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMinimumValueKey, [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeMaximumValueKey,*/ [NSNumber numberWithFloat:0.0], QCPortAttributeDefaultValueKey, nil];
+//            NSDictionary* attributes = @{QCPortAttributeNameKey: @"OSC Float", QCPortAttributeMinimumValueKey: [NSNumber numberWithFloat:FLT_MIN], QCPortAttributeMaximumValueKey: [NSNumber numberWithFloat:FLT_MAX], QCPortAttributeDefaultValueKey: @0.0F};
+            NSDictionary* attributes = @{QCPortAttributeNameKey: @"OSC Float", QCPortAttributeDefaultValueKey: @0.0F};
             [self addInputPortWithType:QCPortTypeNumber forKey:portKey withAttributes:attributes];
         } else if ([type isEqualToString:PEOSCMessageTypeTagString]) {
-            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC String", QCPortAttributeNameKey, @"Log Lady", QCPortAttributeDefaultValueKey, nil];
+            NSDictionary* attributes = @{QCPortAttributeNameKey: @"OSC String", QCPortAttributeDefaultValueKey: @"Log Lady"};
             [self addInputPortWithType:QCPortTypeString forKey:portKey withAttributes:attributes];
         } else if ([type isEqualToString:WBOSCMessageTypeTagBoolean]) {
-            NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"OSC Boolean", QCPortAttributeNameKey, nil];
+            NSDictionary* attributes = @{QCPortAttributeNameKey: @"OSC Boolean"};
             [self addInputPortWithType:QCPortTypeBoolean forKey:portKey withAttributes:attributes];
         }
     }
@@ -231,12 +220,14 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
     for (NSDictionary* param in self.messageParameters) {
         // ignore synthesized Boolean type
         NSString* type = [param objectForKey:WBOSCMessageParameterTypeKey];
-        if ([type isEqualToString:WBOSCMessageTypeTagBoolean])
+        if ([type isEqualToString:WBOSCMessageTypeTagBoolean]) {
             continue;
+        }
 
         // ignore arg-less params
-        if (![param hasKey:WBOSCMessageParameterPortKey])
+        if (![param hasKey:WBOSCMessageParameterPortKey]) {
             continue;
+        }
 
         id value = [self valueForInputKey:[param objectForKey:WBOSCMessageParameterPortKey]];
         [args addObject:value];
