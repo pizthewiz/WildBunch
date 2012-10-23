@@ -17,8 +17,8 @@ extern NSString* const WBOSCMessageTypeTagBoolean;
 @end
 
 @interface WBOSCSenderViewController : QCPlugInViewController
-@property (nonatomic, assign) IBOutlet NSArrayController* parameters;
-@property (nonatomic, assign) IBOutlet NSPopUpButton* typeTagPopUpBotton;
+@property (nonatomic, weak) IBOutlet NSArrayController* parameters;
+@property (nonatomic, weak) IBOutlet NSPopUpButton* typeTagPopUpBotton;
 - (IBAction)addMessageParameter:(id)sender;
 - (IBAction)removeMessageParameter:(id)sender;
 @end

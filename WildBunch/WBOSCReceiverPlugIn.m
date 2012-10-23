@@ -150,19 +150,24 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
         [self _tearDownReceiver];
     }
 
-    PEOSCReceiver* r = [[PEOSCReceiver alloc] initWithPort:self.port];
-    self.receiver = r;
+    self.receiver = [[PEOSCReceiver alloc] initWithPort:self.port];
     self.receiver.delegate = self;
-    BOOL status = [self.receiver beginListening];
+
+    NSError* error;
+    BOOL status = [self.receiver beginListening:&error];
     if (!status) {
-        CCErrorLog(@"ERROR - failed to build up receiver");
+        CCErrorLog(@"ERROR - failed to build up receiver - %@", [error localizedDescription]);
     }
 }
 
 - (void)_tearDownReceiver {
     CCDebugLogSelector();
     if (self.receiver.isListening) {
-        [self.receiver stopListening];
+        [self.receiver stopListeningWithCompletionHandler:^(BOOL success, NSError* error) {
+            if (!success) {
+                CCErrorLog(@"ERROR - failed to cleanly stop listening - %@", [error localizedDescription]);
+            }
+        }];
     }
     self.receiver = nil;
 }

@@ -3,7 +3,7 @@
 //  WildBunch
 //
 //  Created by Jean-Pierre Mouilleseaux on 6 Sept 2011.
-//  Copyright (c) 2011 Chorded Constructions. All rights reserved.
+//  Copyright (c) 2011-2012 Chorded Constructions. All rights reserved.
 //
 
 #import "WBOSCSenderPlugIn.h"
@@ -138,7 +138,7 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         [self _buildUpSender];
     }
 
-    if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal && self.sender.isConnected) {
+    if ([self didValueForInputKeyChange:@"inputSendSignal"] && self.inputSendSignal) {
         NSArray* types = [self _types];
         if (!types.count) {
             CCErrorLog(@"ERROR - cannot send type-less message, consider using an Impulse instead");
@@ -146,7 +146,7 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         }
         PEOSCMessage* message = [[PEOSCMessage alloc] initWithAddress:self.inputAddress typeTags:types arguments:[self _arguments]];
         CCDebugLog(@"will send: %@", message);
-        [self.sender sendMessage:message];
+        [self.sender sendMessage:message handler:nil];
     }
 
 	return YES;
@@ -166,14 +166,10 @@ static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
         [self _tearDownSender];
     }
 
-    PEOSCSender* s = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
-    self.sender = s;
-    [self.sender connect];
+    self.sender = [[PEOSCSender alloc] initWithHost:self.host port:self.port];
 }
 
 - (void)_tearDownSender {
-    if (self.sender.isConnected)
-        [self.sender disconnect];
     self.sender = nil;
 }
 
