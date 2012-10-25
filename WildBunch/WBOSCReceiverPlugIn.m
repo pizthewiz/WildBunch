@@ -74,10 +74,10 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
 - (BOOL)execute:(id <QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary*)arguments {
     // update outputs when appropriate
     if (self.messageReceivedSignalDidChange) {
-        if (self.messageReceivedSignalDidChange) {
+        if (self.messageReceived) {
             // cheap dump of args to struct
             __block NSMutableArray* structure = [NSMutableArray array];
-            [self.message enumerateTypesAndArgumentsUsingBlock:^(id type, id argument, BOOL *stop) {
+            [self.message enumerateTypesAndArgumentsUsingBlock:^(id type, id argument, BOOL* stop) {
                 if (!argument) {
                     if ([type isEqualToString:PEOSCMessageTypeTagTrue]) {
                         argument = @YES;
@@ -92,8 +92,9 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
                     }
                 }
 
-                if (!argument)
+                if (!argument) {
                     return;
+                }
 
                 [structure addObject:@{[PEOSCMessage displayNameForType:type]: argument}];
             }];
