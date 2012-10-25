@@ -11,7 +11,7 @@
 
 static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
 
-@interface WBOSCReceiverPlugIn()
+@interface WBOSCReceiverPlugIn ()
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, strong) PEOSCReceiver* receiver;
 @property (nonatomic, strong) PEOSCMessage* message;

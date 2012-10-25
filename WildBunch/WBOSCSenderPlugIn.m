@@ -10,10 +10,10 @@
 #import "WildBunch.h"
 #import "WBOSCSenderViewController.h"
 
-@interface NSDictionary(WBAdditions)
+@interface NSDictionary (WBAdditions)
 - (BOOL)hasKey:(NSString*)key;
 @end
-@implementation NSDictionary(WBAdditions)
+@implementation NSDictionary (WBAdditions)
 - (BOOL)hasKey:(NSString*)key {
     return [self objectForKey:key] != nil;
 }
@@ -23,7 +23,7 @@
 
 static NSString* const WBSenderExampleCompositionName = @"Arp OSC Sender";
 
-@interface WBOSCSenderPlugIn()
+@interface WBOSCSenderPlugIn ()
 @property (nonatomic, strong) NSString* host;
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, strong) NSMutableArray* messageParameters;

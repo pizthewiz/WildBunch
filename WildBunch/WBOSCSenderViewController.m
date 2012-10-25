@@ -35,7 +35,7 @@ static BOOL shouldAddPortForType(NSString* type) {
     return status;
 }
 
-@interface WBOSCSenderViewController()
+@interface WBOSCSenderViewController ()
 @property (nonatomic, strong) NSArray* types;
 @end
 
