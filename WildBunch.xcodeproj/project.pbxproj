@@ -11,6 +11,7 @@
 		D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D84ED0601416DD7300AD4737 /* Localizable.strings */; };
 		D84ED09414183AA100AD4737 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = D84ED09314183AA100AD4737 /* Settings.xib */; };
 		D84ED0A614192E6C00AD4737 /* WBOSCSenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84ED0A514192E6C00AD4737 /* WBOSCSenderViewController.m */; };
+		D8509D51163A093E00CF2F14 /* Arp OSC Receiver.qtz in Resources */ = {isa = PBXBuildFile; fileRef = D8509D50163A093E00CF2F14 /* Arp OSC Receiver.qtz */; };
 		D899B5841442A6F10059A19F /* WBOSCReceiverPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */; };
 		D8A11AC01416D14800AA3713 /* PonyExpress.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A11AB81416D13100AA3713 /* PonyExpress.framework */; };
 		D8BA3B5F1416A4520076037F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BA3B5E1416A4520076037F /* Quartz.framework */; };
@@ -75,6 +76,7 @@
 		D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		D8509D2F1635DBDF00CF2F14 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.md; sourceTree = SOURCE_ROOT; };
 		D8509D301635DD4B00CF2F14 /* Jakefile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Jakefile.js; sourceTree = SOURCE_ROOT; };
+		D8509D50163A093E00CF2F14 /* Arp OSC Receiver.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = "Arp OSC Receiver.qtz"; sourceTree = SOURCE_ROOT; };
 		D899B5821442A6F10059A19F /* WBOSCReceiverPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBOSCReceiverPlugIn.h; sourceTree = "<group>"; };
 		D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBOSCReceiverPlugIn.m; sourceTree = "<group>"; };
 		D8A11AAD1416D13100AA3713 /* PonyExpress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PonyExpress.xcodeproj; path = vendor/PonyExpress/PonyExpress.xcodeproj; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				D899B5831442A6F10059A19F /* WBOSCReceiverPlugIn.m */,
 				D8BA3B671416A4520076037F /* Supporting Files */,
 				D8F3E2E6141AA99C00EBE4DA /* Arp OSC Sender.qtz */,
+				D8509D50163A093E00CF2F14 /* Arp OSC Receiver.qtz */,
 				D8509D2D1635DBC000CF2F14 /* README.md */,
 				D8509D2E1635DBDF00CF2F14 /* CHANGELOG.md */,
 				D8509D2F1635DBDF00CF2F14 /* TODO.md */,
@@ -271,6 +274,7 @@
 				D84ED0611416DD7300AD4737 /* Localizable.strings in Resources */,
 				D84ED09414183AA100AD4737 /* Settings.xib in Resources */,
 				D8F3E2E7141AA99C00EBE4DA /* Arp OSC Sender.qtz in Resources */,
+				D8509D51163A093E00CF2F14 /* Arp OSC Receiver.qtz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

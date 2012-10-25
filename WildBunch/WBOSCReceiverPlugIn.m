@@ -28,7 +28,7 @@ static NSString* const WBReceiverExampleCompositionName = @"Arp OSC Receiver";
         QCPlugInAttributeNameKey: CCLocalizedString(@"WBOSCReceiverName", NULL),
         QCPlugInAttributeDescriptionKey: CCLocalizedString(@"WBOSCReceiverDescription", NULL),
         QCPlugInAttributeCategoriesKey: @[@"Network"],
-//        QCPlugInAttributeExamplesKey: @[[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"]]
+        QCPlugInAttributeExamplesKey: @[[CCPlugInBundle() URLForResource:WBReceiverExampleCompositionName withExtension:@"qtz"]]
     };
 }
 
